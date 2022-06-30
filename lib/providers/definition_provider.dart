@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:kbti_app/models/definition.dart';
 
+import '../configs/config.dart';
+
 class DefinitionProvider extends ChangeNotifier {
   getDefinitions() async {
-    var url = Uri.parse('https://kbti-api.herokuapp.com/terms/random');
+    var url = Uri.parse('$baseUrl/terms/random');
 
     var result = await http.get(url);
 

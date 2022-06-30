@@ -1,14 +1,12 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
-
+import '../configs/config.dart';
 import '../models/category.dart';
-
 import 'package:http/http.dart' as http;
 
 class DropdownProvider extends ChangeNotifier {
   getCategory() async {
-    var url = Uri.parse('https://kbti-api.herokuapp.com/categories');
+    var url = Uri.parse('$baseUrl/categories');
 
     var result = await http.get(url);
 

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:kbti_app/models/category.dart';
 import 'package:kbti_app/providers/definition_provider.dart';
 import 'package:kbti_app/providers/category_provider.dart';
 import 'package:kbti_app/screens/themes.dart';
 import 'package:kbti_app/widgets/definition_card.dart';
+import 'package:kbti_app/widgets/scroll_behaviour.dart';
 import 'package:provider/provider.dart';
+
+import '../models/definition.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -15,14 +17,15 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  String selectedValue = '1';
+  String selectedIdValue = '1';
+  String selectedCategory = '';
   bool showByCategory = false;
 
   @override
   Widget build(BuildContext context) {
     var definitionProvider = Provider.of<DefinitionProvider>(context);
     definitionProvider.getDefinitions();
-    definitionProvider.getDefinitionsByCategories(selectedValue);
+    definitionProvider.getDefinitionsByCategories(selectedIdValue);
 
     return Scaffold(
         appBar: AppBar(
@@ -37,13 +40,15 @@ class _HomeScreenState extends State<HomeScreen> {
           padding: const EdgeInsets.only(top: 10, right: 20, left: 20),
           child: Column(
             children: [
-              buildSearchBar(),
               buildDropdown(),
               const SizedBox(height: 10),
+              buildSearchBar(),
+              const SizedBox(height: 10),
               // buildRandomDefinitions(definitionProvider),
-              showByCategory == false
-                  ? buildRandomDefinitions(definitionProvider)
-                  : buildDefintionsByCategory(definitionProvider),
+              if (showByCategory == false)
+                buildRandomDefinitions(definitionProvider)
+              else
+                buildDefintionsByCategory(definitionProvider),
             ],
           ),
         ));
@@ -52,22 +57,53 @@ class _HomeScreenState extends State<HomeScreen> {
   FutureBuilder<Object?> buildDefintionsByCategory(
       DefinitionProvider definitionProvider) {
     return FutureBuilder(
-        future: definitionProvider.getDefinitionsByCategories(selectedValue),
+        future: definitionProvider.getDefinitionsByCategories(selectedIdValue),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            List data = snapshot.data as List;
-            print(data);
+            List<Definition> data = snapshot.data as List<Definition>;
+            int index = 0;
             return Expanded(
-                child: ListView.builder(
-                    itemCount: data.length,
-                    itemBuilder: (context, index) {
-                      print(data[index]);
-                      return DefinitionCard(definition: data[index]);
-                    }));
+                child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Kategory dari "${data[index].category}"',
+                    style: GoogleFonts.lato(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: blueColor,
+                    )),
+                const SizedBox(height: 15),
+                ScrollConfiguration(
+                  behavior: MyBehavior(),
+                  child: Expanded(
+                    child: ListView.builder(
+                        itemCount: data.length,
+                        itemBuilder: (context, index) {
+                          return DefinitionCard(definition: data[index]);
+                        }),
+                  ),
+                ),
+              ],
+            ));
           } else if (snapshot.hasError) {
-            return Text('ERROR');
+            return Expanded(
+              child: Column(
+                children: [
+                  CircularProgressIndicator(
+                    color: blueColor,
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    'Memuat..',
+                    style: GoogleFonts.lato(fontSize: 18),
+                  ),
+                ],
+              ),
+            );
           }
-          return CircularProgressIndicator();
+          return CircularProgressIndicator(
+            color: blueColor,
+          );
         });
   }
 
@@ -79,14 +115,32 @@ class _HomeScreenState extends State<HomeScreen> {
           if (snapshot.hasData) {
             List data = snapshot.data as List;
             return Expanded(
-              child: ListView.builder(
-                  itemCount: data.length,
-                  itemBuilder: (context, index) {
-                    return DefinitionCard(definition: data[index]);
-                  }),
+              child: ScrollConfiguration(
+                behavior: MyBehavior(),
+                child: ListView.builder(
+                    itemCount: data.length,
+                    itemBuilder: (context, index) {
+                      return DefinitionCard(definition: data[index]);
+                    }),
+              ),
             );
           }
-          return const CircularProgressIndicator();
+          return Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                CircularProgressIndicator(
+                  color: blueColor,
+                ),
+                const SizedBox(height: 20),
+                Text(
+                  'Memuat...',
+                  style: GoogleFonts.lato(fontSize: 18),
+                ),
+              ],
+            ),
+          );
         });
   }
 
@@ -113,43 +167,64 @@ class _HomeScreenState extends State<HomeScreen> {
     var dropdownProvider = Provider.of<CategoryProvider>(context);
 
     dropdownProvider.getCategory();
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          'Kategori',
-          style: GoogleFonts.lato(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
+    return Container(
+      margin: const EdgeInsets.only(
+        top: 20,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            'Kategori',
+            style: GoogleFonts.lato(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
           ),
-        ),
-        FutureBuilder(
-          future: dropdownProvider.getCategory(),
-          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-            if (snapshot.hasData) {
-              return DropdownButton<String>(
-                  alignment: Alignment.centerRight,
-                  elevation: 2,
-                  borderRadius: BorderRadius.circular(30),
-                  dropdownColor: Colors.white,
-                  value: selectedValue,
-                  items: (snapshot.data)
-                      .map<DropdownMenuItem<String>>((e) => DropdownMenuItem(
-                          value: e.id.toString(),
-                          child: Text(e.category.toString())))
-                      .toList(),
-                  onChanged: (changedValue) {
-                    setState(() {
-                      showByCategory = true;
-                      selectedValue = changedValue.toString();
+          FutureBuilder(
+            future: dropdownProvider.getCategory(),
+            builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+              if (snapshot.hasData) {
+                List<DropdownMenuItem<String>> items = (snapshot.data)
+                    .map<DropdownMenuItem<String>>((e) => DropdownMenuItem(
+                        value: e.id.toString(),
+                        child: Text(e.category.toString())))
+                    .toList();
+                return DropdownButton<String>(
+                    alignment: Alignment.centerRight,
+                    elevation: 2,
+                    borderRadius: BorderRadius.circular(30),
+                    dropdownColor: Colors.white,
+                    value: selectedIdValue,
+                    items: items,
+                    onChanged: (changedValue) {
+                      setState(() {
+                        showByCategory = true;
+                        selectedIdValue = changedValue.toString();
+                      });
                     });
-                  });
-            } else {
-              return Text('Memuat Kategori....');
-            }
-          },
-        ),
-      ],
+              } else {
+                return Row(
+                  children: [
+                    SizedBox(
+                      height: 10,
+                      width: 10,
+                      child: CircularProgressIndicator(
+                        color: blueColor,
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Text(
+                      'Memuat Kategori....',
+                      style: GoogleFonts.lato(fontSize: 15),
+                    ),
+                  ],
+                );
+              }
+            },
+          ),
+        ],
+      ),
     );
   }
 }

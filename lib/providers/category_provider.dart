@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:kbti_app/models/category.dart';
 
+import '../configs/config.dart';
+
 class CategoryProvider extends ChangeNotifier {
   getCategory() async {
-    var url = Uri.parse('https://kbti-api.herokuapp.com/categories');
+    var url = Uri.parse('$baseUrl/categories');
 
     var result = await http.get(url);
 
