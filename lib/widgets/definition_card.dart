@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:kbti_app/models/definition.dart';
@@ -40,9 +41,6 @@ class DefinitionCard extends StatelessWidget {
                   label: definition.category,
                 ),
                 SizedBox(width: 10),
-                ChipCategory(
-                    label:
-                        'Nilai votes : ${((definition.upVotes) - (definition.downVotes)).toString()}'),
               ],
             ),
             Row(
@@ -68,6 +66,23 @@ class DefinitionCard extends StatelessWidget {
                 fontSize: 15,
               ),
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ChipCategory(
+                    label:
+                        'Nilai votes : ${((definition.upVotes) - (definition.downVotes)).toString()}'),
+                IconButton(
+                    onPressed: () {
+                      Clipboard.setData(
+                          ClipboardData(text: definition.definition));
+                    },
+                    icon: Icon(
+                      Icons.copy_rounded,
+                      color: blueColor,
+                    ))
+              ],
+            )
           ],
         ),
       ),
