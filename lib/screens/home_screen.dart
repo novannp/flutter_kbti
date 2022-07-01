@@ -4,6 +4,7 @@ import 'package:kbti_app/providers/definition_provider.dart';
 import 'package:kbti_app/providers/dropdown_provider.dart';
 import 'package:kbti_app/screens/themes.dart';
 import 'package:kbti_app/widgets/definition_card.dart';
+import 'package:kbti_app/widgets/navigation_drawer.dart';
 import 'package:kbti_app/widgets/scroll_behaviour.dart';
 import 'package:provider/provider.dart';
 
@@ -41,10 +42,11 @@ class _HomeScreenState extends State<HomeScreen> {
     dropdownProvider.getCategory();
 
     return Scaffold(
+        drawer: NavigationDrawer(),
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           backgroundColor: blueColor,
-          elevation: 0,
+          elevation: 2,
           title: Image.asset(
             'assets/images/logo.png',
             height: 30,
@@ -98,11 +100,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   buildSearchedText(),
                   Expanded(
-                    child: ListView.builder(
-                        itemCount: data.length,
-                        itemBuilder: (context, index) {
-                          return DefinitionCard(definition: data[index]);
-                        }),
+                    child: ScrollConfiguration(
+                      behavior: MyBehavior(),
+                      child: ListView.builder(
+                          itemCount: data.length,
+                          itemBuilder: (context, index) {
+                            return DefinitionCard(definition: data[index]);
+                          }),
+                    ),
                   ),
                 ],
               ),
@@ -327,7 +332,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget buildDropdown(DropdownProvider dropdownProvider) {
     return Container(
       margin: const EdgeInsets.only(
-        top: 20,
+        top: 10,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
