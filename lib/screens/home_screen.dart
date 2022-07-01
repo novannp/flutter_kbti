@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kbti_app/providers/definition_provider.dart';
-import 'package:kbti_app/providers/category_provider.dart';
+import 'package:kbti_app/providers/dropdown_provider.dart';
 import 'package:kbti_app/screens/themes.dart';
 import 'package:kbti_app/widgets/definition_card.dart';
 import 'package:kbti_app/widgets/scroll_behaviour.dart';
@@ -17,9 +17,19 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  TextEditingController controller = TextEditingController();
   String selectedIdValue = '1';
   String selectedCategory = '';
   bool showByCategory = false;
+  bool showBySearch = false;
+  bool showByRandom = true;
+
+  @override
+  void dispose() {
+    controller.dispose();
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +37,11 @@ class _HomeScreenState extends State<HomeScreen> {
     definitionProvider.getDefinitions();
     definitionProvider.getDefinitionsByCategories(selectedIdValue);
 
+    var dropdownProvider = Provider.of<DropdownProvider>(context);
+    dropdownProvider.getCategory();
+
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           backgroundColor: blueColor,
           elevation: 0,
@@ -40,33 +54,120 @@ class _HomeScreenState extends State<HomeScreen> {
           padding: const EdgeInsets.only(top: 10, right: 20, left: 20),
           child: Column(
             children: [
-              buildDropdown(),
+              buildDropdown(dropdownProvider),
               const SizedBox(height: 10),
-              buildSearchBar(),
+              buildSearchBar(definitionProvider),
               const SizedBox(height: 10),
-              // buildRandomDefinitions(definitionProvider),
-              if (showByCategory == false)
-                buildRandomDefinitions(definitionProvider)
+              if (showByCategory == true)
+                buildDefinitionsByCategory(definitionProvider)
+              else if (showBySearch == true)
+                buildDefinitionsBySearch(definitionProvider)
               else
-                buildDefintionsByCategory(definitionProvider),
+                buildRandomDefinitions(definitionProvider)
+              // if (showByCategory == false || showBySearch == false)
+              // buildRandomDefinitions(definitionProvider)
+              // else if (showBySearch == true || showByCategory == false)
+              //   buildDefinitionsBySearch(definitionProvider)
+              // else if (showByCategory == true)
+              //   buildDefintionsByCategory(definitionProvider),
             ],
           ),
         ));
   }
 
-  FutureBuilder<Object?> buildDefintionsByCategory(
+  FutureBuilder<Object?> buildDefinitionsBySearch(
+      DefinitionProvider definitionProvider) {
+    return FutureBuilder(
+        future:
+            definitionProvider.searchDefinitions(controller.text.toString()),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Expanded(
+              child: Center(
+                child: CircularProgressIndicator(
+                  color: blueColor,
+                ),
+              ),
+            );
+          } else if (snapshot.hasData) {
+            List data = snapshot.data as List;
+
+            return Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  buildSearchedText(),
+                  Expanded(
+                    child: ListView.builder(
+                        itemCount: data.length,
+                        itemBuilder: (context, index) {
+                          return DefinitionCard(definition: data[index]);
+                        }),
+                  ),
+                ],
+              ),
+            );
+          } else if (snapshot.hasError) {
+            return Expanded(
+                child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text('Pencarian tidak ditemukan!',
+                    style: GoogleFonts.lato(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                      color: blueColor,
+                    )),
+                const SizedBox(height: 20),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      'assets/images/empty-list.png',
+                      height: 150,
+                    ),
+                    const SizedBox(height: 20),
+                    Text(
+                        'Data definisi tidak ditemukan, silahkan lakukan pencarian!',
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.lato(
+                          fontSize: 24,
+                          color: Colors.grey,
+                        )),
+                  ],
+                ),
+              ],
+            ));
+          }
+          return CircularProgressIndicator(
+            color: blueColor,
+          );
+        });
+  }
+
+  FutureBuilder<Object?> buildDefinitionsByCategory(
       DefinitionProvider definitionProvider) {
     return FutureBuilder(
         future: definitionProvider.getDefinitionsByCategories(selectedIdValue),
         builder: (context, snapshot) {
-          if (snapshot.hasData) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Expanded(
+              child: Center(
+                child: CircularProgressIndicator(
+                  color: blueColor,
+                ),
+              ),
+            );
+          } else if (snapshot.hasData) {
             List<Definition> data = snapshot.data as List<Definition>;
             int index = 0;
             return Expanded(
                 child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Kategory dari "${data[index].category}"',
+                Text('Kategori dari "${data[index].category}" :',
                     style: GoogleFonts.lato(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -76,29 +177,47 @@ class _HomeScreenState extends State<HomeScreen> {
                 ScrollConfiguration(
                   behavior: MyBehavior(),
                   child: Expanded(
-                    child: ListView.builder(
-                        itemCount: data.length,
-                        itemBuilder: (context, index) {
-                          return DefinitionCard(definition: data[index]);
-                        }),
-                  ),
+                      child: ListView.builder(
+                          itemCount: data.length,
+                          itemBuilder: (context, index) {
+                            return DefinitionCard(definition: data[index]);
+                          })),
                 ),
               ],
             ));
           } else if (snapshot.hasError) {
             return Expanded(
-              child: Column(
-                children: [
-                  CircularProgressIndicator(
-                    color: blueColor,
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    'Memuat..',
-                    style: GoogleFonts.lato(fontSize: 18),
-                  ),
-                ],
-              ),
+                child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text('Kategori ini kosong!',
+                    style: GoogleFonts.lato(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                      color: blueColor,
+                    )),
+                const SizedBox(height: 20),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Image.asset('assets/images/empty-list.png'),
+                    const SizedBox(height: 20),
+                    Text(
+                        'Data definisi tidak ditemukan, silahkan lakukan pencarian!',
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.lato(
+                          fontSize: 24,
+                          color: Colors.grey,
+                        )),
+                  ],
+                ),
+              ],
+            ));
+          } else {
+            CircularProgressIndicator(
+              color: blueColor,
             );
           }
           return CircularProgressIndicator(
@@ -144,29 +263,68 @@ class _HomeScreenState extends State<HomeScreen> {
         });
   }
 
-  Widget buildSearchBar() {
-    return TextFormField(
-      style: const TextStyle(fontSize: 20),
-      cursorColor: blueColor,
-      decoration: InputDecoration(
-          contentPadding:
-              const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-          hintText: 'Cari Istilah',
-          hintStyle: TextStyle(fontSize: 20, color: blueColor),
-          border: OutlineInputBorder(
-            borderSide: BorderSide(color: greyColor),
-            borderRadius: BorderRadius.circular(30),
-          ),
-          focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: greyColor.withOpacity(0.5)),
-              borderRadius: BorderRadius.circular(30))),
+  Widget buildSearchedText() {
+    return Column(
+      children: [
+        const SizedBox(height: 10),
+        Text(
+          'Hasil pencarian "${controller.text}"',
+          style: GoogleFonts.lato(fontSize: 20),
+        )
+      ],
     );
   }
 
-  Widget buildDropdown() {
-    var dropdownProvider = Provider.of<CategoryProvider>(context);
+  Widget buildSearchBar(DefinitionProvider definitionProvider) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        TextFormField(
+          onChanged: (newValue) {
+            setState(() {
+              showBySearch = true;
+              showByCategory = false;
+              showByRandom = false;
+            });
+          },
+          onFieldSubmitted: (newValue) => setState(() {
+            showBySearch = true;
+            showByCategory = false;
+            showByRandom = false;
+            definitionProvider.searchDefinitions(newValue);
+          }),
+          onSaved: (newValue) {
+            setState(() {
+              setState(() {
+                showBySearch = true;
+                showByCategory = false;
+                showByRandom = false;
+              });
+              definitionProvider.searchDefinitions(newValue);
+            });
+          },
+          controller: controller,
+          keyboardType: TextInputType.name,
+          style: const TextStyle(fontSize: 20),
+          cursorColor: blueColor,
+          decoration: InputDecoration(
+              contentPadding:
+                  const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+              hintText: 'Cari Istilah',
+              hintStyle: TextStyle(fontSize: 20, color: blueColor),
+              border: OutlineInputBorder(
+                borderSide: BorderSide(color: greyColor),
+                borderRadius: BorderRadius.circular(30),
+              ),
+              focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: greyColor.withOpacity(0.5)),
+                  borderRadius: BorderRadius.circular(30))),
+        ),
+      ],
+    );
+  }
 
-    dropdownProvider.getCategory();
+  Widget buildDropdown(DropdownProvider dropdownProvider) {
     return Container(
       margin: const EdgeInsets.only(
         top: 20,
