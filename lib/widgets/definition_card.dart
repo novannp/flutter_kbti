@@ -39,6 +39,7 @@ class DefinitionCard extends StatelessWidget {
                 ChipCategory(
                   label: definition.category,
                 ),
+                SizedBox(width: 10),
                 ChipCategory(
                     label:
                         'Nilai votes : ${((definition.upVotes) - (definition.downVotes)).toString()}'),

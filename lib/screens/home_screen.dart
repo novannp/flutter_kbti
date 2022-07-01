@@ -72,6 +72,8 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 10),
               if (showByCategory == true)
                 buildDefinitionsByCategory(definitionProvider)
+              else if (controller.text == "")
+                buildRandomDefinitions(definitionProvider)
               else if (showBySearch == true)
                 buildDefinitionsBySearch(definitionProvider)
               else
