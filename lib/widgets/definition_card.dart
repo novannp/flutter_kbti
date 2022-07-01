@@ -71,9 +71,28 @@ class DefinitionCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                ChipCategory(
-                    label:
-                        'Nilai votes : ${((definition.upVotes) - (definition.downVotes)).toString()}'),
+                GestureDetector(
+                  onTap: () {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text(
+                              'Apa itu nilai vote ?',
+                              style: GoogleFonts.lato(
+                                  fontSize: 14, fontWeight: FontWeight.bold),
+                            ),
+                            content: Text(
+                              'Semakin tinggi nilai vote, maka semakin tinggi tingkat kepercayaannnya.',
+                              style: GoogleFonts.lato(fontSize: 12),
+                            ),
+                          );
+                        });
+                  },
+                  child: ChipCategory(
+                      label:
+                          'Nilai votes : ${((definition.upVotes) - (definition.downVotes)).toString()}'),
+                ),
                 IconButton(
                     onPressed: () {
                       Clipboard.setData(
@@ -86,7 +105,11 @@ class DefinitionCard extends StatelessWidget {
                               Navigator.pop(context);
                             });
                             return AlertDialog(
-                              content: Text('Definisi telah disalin'),
+                              contentPadding: EdgeInsets.all(8),
+                              content: Text(
+                                'Definisi telah disalin',
+                                textAlign: TextAlign.center,
+                              ),
                             );
                           });
                     },
