@@ -15,13 +15,10 @@ class DropdownProvider extends ChangeNotifier {
       //MAPPING TO CATEGORY OBJECT
       List<Category> categories =
           data.map((e) => Category.fromJson(e)).toList();
-      // MAPPING OBJECT TO STRING
-      // List<String> categoriesList =
-      //     categories.map((e) => e.category.toString()).toList();
 
       return categories;
     } else {
-      <String>[];
+      <Category>[];
     }
   }
 }
