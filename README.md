@@ -8,12 +8,12 @@ KBTI atau Kamus Besar Teknologi Informasi adalah aplikasi yang menyediakan istil
 
 1. Clone the project
     ```bash
-      git clone https://github.com/CPSG-31/kbti-frontend.git
+      git clone https://github.com/novannp/flutter_kbti.git
     ```
 
 2. Go to the project directory
     ```bash
-      cd kbti-frontend
+      cd flutter_kbti
     ```
 
 3. Install dependencies
