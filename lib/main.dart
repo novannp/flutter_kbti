@@ -4,6 +4,7 @@ import 'package:kbti_app/providers/category_provider.dart';
 import 'package:kbti_app/providers/definition_provider.dart';
 import 'package:kbti_app/providers/dropdown_provider.dart';
 import 'package:kbti_app/screens/splash_screen.dart';
+import 'package:kbti_app/screens/themes.dart';
 import 'package:provider/provider.dart';
 import 'screens/home_screen.dart';
 
@@ -21,7 +22,9 @@ class KBTIApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(textTheme: TextTheme(subtitle1: GoogleFonts.lato())),
+      theme: ThemeData(
+          splashColor: blueDarkColor,
+          textTheme: TextTheme(subtitle1: GoogleFonts.lato())),
       debugShowCheckedModeBanner: false,
       title: 'KBTI',
       initialRoute: '/',

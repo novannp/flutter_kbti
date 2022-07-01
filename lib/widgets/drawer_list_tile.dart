@@ -7,20 +7,25 @@ class DrawerListTile extends StatelessWidget {
   final String title;
   final Icon icon;
   final Function() onTap;
+  final bool selected = false;
   const DrawerListTile(
       {Key? key, required this.title, required this.icon, required this.onTap})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      leading: icon,
-      selectedTileColor: blueDarkColor,
-      hoverColor: blueDarkColor,
-      onTap: onTap,
-      title: Text(
-        title,
-        style: GoogleFonts.lato(fontSize: 16, color: Colors.white),
+    return Material(
+      color: blueColor,
+      child: InkWell(
+        splashColor: blueDarkColor,
+        onTap: onTap,
+        child: ListTile(
+          leading: icon,
+          title: Text(
+            title,
+            style: GoogleFonts.lato(fontSize: 16, color: Colors.white),
+          ),
+        ),
       ),
     );
   }

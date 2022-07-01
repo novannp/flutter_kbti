@@ -42,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
     dropdownProvider.getCategory();
 
     return Scaffold(
-        drawer: NavigationDrawer(),
+        drawer: const NavigationDrawer(),
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           backgroundColor: blueColor,
