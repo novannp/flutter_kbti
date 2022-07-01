@@ -22,104 +22,137 @@ class DefinitionCard extends StatelessWidget {
     var dateFormatter = DateFormat('dd MMMM yyy');
     String formattedDate = dateFormatter.format(convertTime);
     return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 10),
-            Row(
-              children: [
-                Text(
-                  definition.term,
-                  style: GoogleFonts.lato(
-                    fontSize: 30,
-                    fontWeight: FontWeight.w600,
-                    color: blueColor,
+      child: InkWell(
+        onTap: () {
+          showDialog(
+              context: context,
+              builder: (BuildContext contect) {
+                return AlertDialog(
+                  title: Text(
+                    definition.term,
+                    style: GoogleFonts.lato(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
                   ),
-                ),
-                Spacer(),
-                ChipCategory(
-                  label: definition.category,
-                ),
-                SizedBox(width: 10),
-              ],
-            ),
-            Row(
-              // ignore: prefer_const_literals_to_create_immutables
-              children: [
-                Text(
-                  definition.username,
-                  style: GoogleFonts.lato(
-                    fontStyle: FontStyle.italic,
+                  content: Text(definition.definition),
+                );
+              });
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 10),
+              Row(
+                children: [
+                  Text(
+                    definition.term,
+                    style: GoogleFonts.lato(
+                      fontSize: 30,
+                      fontWeight: FontWeight.w600,
+                      color: blueColor,
+                    ),
                   ),
-                ),
-                Text(
-                  ' • $formattedDate',
-                  style:
-                      GoogleFonts.lato(color: Color(0xff6c757d), fontSize: 12),
-                ),
-              ],
-            ),
-            SizedBox(height: 10),
-            Text(
-              definition.definition,
-              style: GoogleFonts.lato(
-                fontSize: 15,
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: Text(
-                              'Apa itu nilai vote ?',
-                              style: GoogleFonts.lato(
-                                  fontSize: 14, fontWeight: FontWeight.bold),
-                            ),
-                            content: Text(
-                              'Semakin tinggi nilai vote, maka semakin tinggi tingkat kepercayaannnya.',
-                              style: GoogleFonts.lato(fontSize: 12),
-                            ),
-                          );
-                        });
-                  },
-                  child: ChipCategory(
-                      label:
-                          'Nilai votes : ${((definition.upVotes) - (definition.downVotes)).toString()}'),
-                ),
-                IconButton(
-                    onPressed: () {
-                      Clipboard.setData(
-                          ClipboardData(text: definition.definition));
-
+                  Spacer(),
+                  GestureDetector(
+                    onTap: () {
                       showDialog(
                           context: context,
                           builder: (BuildContext context) {
-                            Timer(Duration(seconds: 1), () {
-                              Navigator.pop(context);
-                            });
                             return AlertDialog(
-                              contentPadding: EdgeInsets.all(8),
                               content: Text(
-                                'Definisi telah disalin',
-                                textAlign: TextAlign.center,
+                                'Kategori dari definisi ini adalah ${definition.category}',
+                                style: GoogleFonts.lato(fontSize: 12),
                               ),
                             );
                           });
                     },
-                    icon: Icon(
-                      Icons.copy_rounded,
-                      color: blueColor,
-                    ))
-              ],
-            )
-          ],
+                    child: ChipCategory(
+                      label: definition.category,
+                    ),
+                  ),
+                  SizedBox(width: 10),
+                ],
+              ),
+              Row(
+                // ignore: prefer_const_literals_to_create_immutables
+                children: [
+                  Text(
+                    definition.username,
+                    style: GoogleFonts.lato(
+                      fontStyle: FontStyle.italic,
+                    ),
+                  ),
+                  Text(
+                    ' • $formattedDate',
+                    style: GoogleFonts.lato(
+                        color: Color(0xff6c757d), fontSize: 12),
+                  ),
+                ],
+              ),
+              SizedBox(height: 10),
+              Text(
+                definition.definition,
+                style: GoogleFonts.lato(
+                  fontSize: 15,
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text(
+                                'Apa itu nilai vote ?',
+                                style: GoogleFonts.lato(
+                                    fontSize: 14, fontWeight: FontWeight.bold),
+                              ),
+                              content: Text(
+                                'Semakin tinggi nilai vote, maka semakin tinggi tingkat kepercayaannnya.',
+                                style: GoogleFonts.lato(fontSize: 12),
+                              ),
+                            );
+                          });
+                    },
+                    child: ChipCategory(
+                        label:
+                            'Nilai votes : ${((definition.upVotes) - (definition.downVotes)).toString()}'),
+                  ),
+                  IconButton(
+                      splashRadius: 20,
+                      onPressed: () {
+                        Clipboard.setData(
+                            ClipboardData(text: definition.definition));
+
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              Timer(Duration(seconds: 1), () {
+                                Navigator.pop(context);
+                              });
+                              return AlertDialog(
+                                contentPadding: EdgeInsets.all(8),
+                                content: Text(
+                                  'Definisi telah disalin',
+                                  textAlign: TextAlign.center,
+                                ),
+                              );
+                            });
+                      },
+                      icon: Icon(
+                        Icons.copy_rounded,
+                        color: blueColor,
+                      ))
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );
