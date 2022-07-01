@@ -78,12 +78,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 buildDefinitionsBySearch(definitionProvider)
               else
                 buildRandomDefinitions(definitionProvider)
-              // if (showByCategory == false || showBySearch == false)
-              // buildRandomDefinitions(definitionProvider)
-              // else if (showBySearch == true || showByCategory == false)
-              //   buildDefinitionsBySearch(definitionProvider)
-              // else if (showByCategory == true)
-              //   buildDefintionsByCategory(definitionProvider),
             ],
           ),
         ));

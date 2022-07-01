@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -76,6 +78,17 @@ class DefinitionCard extends StatelessWidget {
                     onPressed: () {
                       Clipboard.setData(
                           ClipboardData(text: definition.definition));
+
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            Timer(Duration(seconds: 1), () {
+                              Navigator.pop(context);
+                            });
+                            return AlertDialog(
+                              content: Text('Definisi telah disalin'),
+                            );
+                          });
                     },
                     icon: Icon(
                       Icons.copy_rounded,
