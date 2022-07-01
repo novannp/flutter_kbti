@@ -86,6 +86,10 @@ class AboutScreen extends StatelessWidget {
                           name: 'Sofyan Egi Lesmana',
                           networkImage: 'https://picsum.photos/500',
                           collage: 'Universitas  Pasundan'),
+                      AvatarDeveloper(
+                          name: 'Novan Noviansyah Pratama',
+                          networkImage: 'https://picsum.photos/600',
+                          collage: 'Institut Teknologi Garut'),
                     ],
                   )
                 ],

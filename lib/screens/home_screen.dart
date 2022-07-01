@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kbti_app/providers/definition_provider.dart';
@@ -43,6 +45,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
         drawer: const NavigationDrawer(),
+        // floatingActionButtonLocation:
+        //     FloatingActionButtonLocation.miniEndDocked,
+        // floatingActionButton: FloatingActionButton(
+        //   backgroundColor: blueColor,
+        //   onPressed: () {},
+        //   child: Icon(Icons.add_rounded),
+        // ),
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           backgroundColor: blueColor,
@@ -52,6 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
             height: 30,
           ),
         ),
+        // bottomNavigationBar: CustomBottomAppBar(),
         body: Padding(
           padding: const EdgeInsets.only(top: 10, right: 20, left: 20),
           child: Column(

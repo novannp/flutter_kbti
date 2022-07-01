@@ -22,6 +22,8 @@ class KBTIApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      darkTheme: ThemeData.dark(),
+      themeMode: ThemeMode.light,
       theme: ThemeData(
           splashColor: blueDarkColor,
           textTheme: TextTheme(subtitle1: GoogleFonts.lato())),

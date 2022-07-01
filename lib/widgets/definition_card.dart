@@ -17,7 +17,7 @@ class DefinitionCard extends StatelessWidget {
         DateTime.fromMillisecondsSinceEpoch(definition.updatedAt * 1000);
 
     var dateFormatter = DateFormat('dd MMMM yyy');
-    String formatted = dateFormatter.format(convertTime);
+    String formattedDate = dateFormatter.format(convertTime);
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -39,6 +39,9 @@ class DefinitionCard extends StatelessWidget {
                 ChipCategory(
                   label: definition.category,
                 ),
+                ChipCategory(
+                    label:
+                        'Nilai votes : ${((definition.upVotes) - (definition.downVotes)).toString()}'),
               ],
             ),
             Row(
@@ -51,7 +54,7 @@ class DefinitionCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  ' • $formatted',
+                  ' • $formattedDate',
                   style:
                       GoogleFonts.lato(color: Color(0xff6c757d), fontSize: 12),
                 ),

@@ -13,21 +13,4 @@ class Category {
       category: json["category"],
     );
   }
-
-//   static Future<List<dynamic>> fetchCategory() async {
-//     var apiUrl = Uri.parse('https://kbti-api.herokuapp.com/categories');
-//     final response = await http.get(apiUrl);
-
-//     if (response.statusCode == 200) {
-//       var jsonObject = json.decode(response.body);
-
-//       var jsonResult = jsonObject['data'];
-
-//       var result = {for (var category in jsonResult) category[0]: category[1]};
-
-//       return jsonResult;
-//     } else {
-//       throw Exception('Failed to Load');
-//     }
-//   }
 }

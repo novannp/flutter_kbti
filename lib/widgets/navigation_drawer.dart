@@ -13,7 +13,7 @@ class NavigationDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: blueColor,
+      color: Colors.white,
       height: double.infinity,
       width: (MediaQuery.of(context).size.width) * 0.65,
       child: Stack(
@@ -54,7 +54,7 @@ class NavigationDrawer extends StatelessWidget {
               ),
               DrawerListTile(
                 title: 'Dashboard',
-                icon: const Icon(Icons.dashboard_rounded, color: Colors.white),
+                icon: Icon(Icons.dashboard_rounded, color: blueColor),
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return const DashboardScreen();
@@ -63,7 +63,7 @@ class NavigationDrawer extends StatelessWidget {
               ),
               DrawerListTile(
                 title: 'Pencarian',
-                icon: const Icon(Icons.search_rounded, color: Colors.white),
+                icon: Icon(Icons.search_rounded, color: blueColor),
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return const HomeScreen();
@@ -72,8 +72,7 @@ class NavigationDrawer extends StatelessWidget {
               ),
               DrawerListTile(
                 title: 'Tentang',
-                icon:
-                    const Icon(Icons.info_outline_rounded, color: Colors.white),
+                icon: Icon(Icons.info_outline_rounded, color: blueColor),
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return const AboutScreen();
@@ -82,11 +81,37 @@ class NavigationDrawer extends StatelessWidget {
               ),
               DrawerListTile(
                 title: 'Logout',
-                icon: const Icon(Icons.logout_rounded, color: Colors.white),
+                icon: Icon(Icons.logout_rounded, color: blueColor),
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return const DashboardScreen();
-                  }));
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text(
+                          'Anda yakin ingin Logout ?',
+                          style: GoogleFonts.lato(
+                              fontWeight: FontWeight.bold, color: blueColor),
+                        ),
+                        content: const Text('Mohon maaf belum bisa :)'),
+                        actions: [
+                          Center(
+                            child: SizedBox(
+                              width: double.infinity,
+                              child: TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text(
+                                  'OK',
+                                  style: GoogleFonts.lato(color: blueColor),
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      );
+                    },
+                  );
                 },
               ),
               const Spacer(),
@@ -94,7 +119,7 @@ class NavigationDrawer extends StatelessWidget {
                 padding: const EdgeInsets.all(20.0),
                 child: Text(
                   '2022 \u00a9 KBTI',
-                  style: GoogleFonts.lato(color: Colors.white),
+                  style: GoogleFonts.lato(color: blueColor),
                 ),
               ),
             ],

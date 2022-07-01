@@ -6,6 +6,8 @@ class Definition {
   String term;
   String definition;
   String username;
+  int upVotes;
+  int downVotes;
 
   Definition(
       {required this.id,
@@ -14,7 +16,9 @@ class Definition {
       required this.updatedAt,
       required this.term,
       required this.definition,
-      required this.username});
+      required this.username,
+      required this.upVotes,
+      required this.downVotes});
 
   factory Definition.fromJson(Map<String, dynamic> json) {
     return Definition(
@@ -24,6 +28,8 @@ class Definition {
         updatedAt: json['updated_at'],
         term: json['term'],
         definition: json['definition'],
-        username: json['username']);
+        username: json['username'],
+        upVotes: json['up_votes'],
+        downVotes: json['down_votes']);
   }
 }

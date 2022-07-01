@@ -1,7 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.kbti_app">
+    <uses-permission android:name="android.permission.INTERNET" />
    <application
-        android:label="kbti_app"
+        android:label="KBTI"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
