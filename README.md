@@ -1,16 +1,34 @@
-# kbti_app
+# KBTI
 
-A new Flutter project.
+<p align="center">
+  <img src="./assets/images/logo.png" width="200">
+</p>
 
-## Getting Started
+KBTI atau Kamus Besar Teknologi Informasi adalah aplikasi yang menyediakan istilah dan definisi dalam dunia Informasi Teknologi yang ditulis berdasarkan partisipasi pengguna.
 
-This project is a starting point for a Flutter application.
+1. Clone the project
+    ```bash
+      git clone https://github.com/CPSG-31/kbti-frontend.git
+    ```
 
-A few resources to get you started if this is your first Flutter project:
+2. Go to the project directory
+    ```bash
+      cd kbti-frontend
+    ```
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+3. Install dependencies
+    ```bash
+      flutter pub get
+    ```
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+4. Start debugging 
+    ```bash
+      flutter run
+    ```
+
+5. Build the project 
+    ```bash
+      flutter build apk
+    ```
+# License
+[MIT](./LICENSE) License Copyright (c) 2022 KBTI
