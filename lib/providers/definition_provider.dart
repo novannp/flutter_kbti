@@ -8,7 +8,7 @@ import '../configs/config.dart';
 import '../models/term.dart';
 
 class DefinitionProvider extends ChangeNotifier {
-  getDefinitions() async {
+  getRandomDefinitions() async {
     var url = Uri.parse('$baseUrl/terms/random');
 
     var result = await http.get(url);
@@ -50,8 +50,7 @@ class DefinitionProvider extends ChangeNotifier {
     List<Definition> definitions = [];
 
     while (i < terms.length) {
-      var url = Uri.parse(
-          'https://kbti-api.herokuapp.com/definitions?term=${terms[i].term}');
+      var url = Uri.parse('$baseUrl/definitions?term=${terms[i].term}');
       var result = await http.get(url);
 
       if (result.statusCode == 200) {
@@ -69,13 +68,13 @@ class DefinitionProvider extends ChangeNotifier {
   }
 
   searchDefinitions(userInput) async {
-    var url = Uri.parse('https://kbti-api.herokuapp.com/search?q=$userInput');
+    var url = Uri.parse('$baseUrl/search?q=$userInput');
     var result = await http.get(url);
 
     if (result.statusCode == 200) {
       List data = jsonDecode(result.body)['data'];
-      List<Term> term = data.map((e) => Term.fromJson(e)).toList();
-      return getDefinitionsByTerm(term);
+      List<Term> terms = data.map((e) => Term.fromJson(e)).toList();
+      return getDefinitionsByTerm(terms);
     } else if (result.statusCode == 404) {
       throw 'error';
     } else {
