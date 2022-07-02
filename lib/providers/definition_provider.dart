@@ -77,7 +77,7 @@ class DefinitionProvider extends ChangeNotifier {
       List<Term> term = data.map((e) => Term.fromJson(e)).toList();
       return getDefinitionsByTerm(term);
     } else if (result.statusCode == 404) {
-      return <Term>[];
+      throw 'error';
     } else {
       return <Term>[];
     }

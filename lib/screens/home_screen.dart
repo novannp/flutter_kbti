@@ -70,12 +70,12 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 10),
               buildSearchBar(definitionProvider),
               const SizedBox(height: 10),
-              if (controller.text == "")
+              if (showByCategory == true)
+                buildDefinitionsByCategory(definitionProvider)
+              else if (controller.text == "")
                 buildRandomDefinitions(definitionProvider)
               else if (showBySearch == true)
                 buildDefinitionsBySearch(definitionProvider)
-              else if (showByCategory == true)
-                buildDefinitionsByCategory(definitionProvider)
               else
                 buildRandomDefinitions(definitionProvider)
             ],
@@ -99,7 +99,6 @@ class _HomeScreenState extends State<HomeScreen> {
             );
           } else if (snapshot.hasData) {
             List data = snapshot.data as List;
-
             return Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -118,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             );
-          } else if (snapshot.hasError) {
+          } else {
             return Expanded(
                 child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -152,9 +151,6 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ));
           }
-          return CircularProgressIndicator(
-            color: blueColor,
-          );
         });
   }
 
@@ -292,7 +288,10 @@ class _HomeScreenState extends State<HomeScreen> {
       children: [
         TextFormField(
           onFieldSubmitted: (newValue) {
-            setState(() {});
+            setState(() {
+              showByCategory = false;
+              showBySearch = true;
+            });
           },
           controller: controller,
           keyboardType: TextInputType.text,
