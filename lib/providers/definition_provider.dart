@@ -1,15 +1,13 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:kbti_app/configs/apiEndPoints.dart';
 import 'package:kbti_app/models/definition.dart';
-
-import '../configs/config.dart';
 import '../models/term.dart';
 
 class DefinitionProvider extends ChangeNotifier {
   getRandomDefinitions() async {
-    var url = Uri.parse('$baseUrl/terms/random');
+    var url = Uri.parse(apiEndPoint['GET_RANDOM_DEFINITIONS']);
 
     var result = await http.get(url);
 
@@ -17,7 +15,6 @@ class DefinitionProvider extends ChangeNotifier {
       List data = jsonDecode(result.body)['data'];
       List<Definition> definitions =
           data.map((item) => Definition.fromJson(item)).toList();
-
       return definitions;
     } else if (result.statusCode == 404) {
       return Center(
@@ -29,8 +26,7 @@ class DefinitionProvider extends ChangeNotifier {
   }
 
   getDefinitionsByCategories(id) async {
-    var url =
-        Uri.parse('https://kbti-api.herokuapp.com/definitions?categoryId=$id');
+    var url = Uri.parse('${apiEndPoint['GET_DEFINITION_BY_CATEGORY']}$id');
     var result = await http.get(url);
 
     if (result.statusCode == 200) {
@@ -50,7 +46,8 @@ class DefinitionProvider extends ChangeNotifier {
     List<Definition> definitions = [];
 
     while (i < terms.length) {
-      var url = Uri.parse('$baseUrl/definitions?term=${terms[i].term}');
+      var url =
+          Uri.parse('${apiEndPoint['GET_DEFINITION_BY_TERM']}${terms[i].term}');
       var result = await http.get(url);
 
       if (result.statusCode == 200) {
@@ -68,7 +65,7 @@ class DefinitionProvider extends ChangeNotifier {
   }
 
   searchDefinitions(userInput) async {
-    var url = Uri.parse('$baseUrl/search?q=$userInput');
+    var url = Uri.parse('${apiEndPoint['SEARCH_DEFINITION']}$userInput');
     var result = await http.get(url);
 
     if (result.statusCode == 200) {
