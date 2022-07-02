@@ -70,12 +70,12 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 10),
               buildSearchBar(definitionProvider),
               const SizedBox(height: 10),
-              if (showByCategory == true)
-                buildDefinitionsByCategory(definitionProvider)
-              else if (controller.text == "")
+              if (controller.text == "")
                 buildRandomDefinitions(definitionProvider)
               else if (showBySearch == true)
                 buildDefinitionsBySearch(definitionProvider)
+              else if (showByCategory == true)
+                buildDefinitionsByCategory(definitionProvider)
               else
                 buildRandomDefinitions(definitionProvider)
             ],
@@ -291,28 +291,8 @@ class _HomeScreenState extends State<HomeScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         TextFormField(
-          onChanged: (newValue) {
-            setState(() {
-              showBySearch = true;
-              showByCategory = false;
-              showByRandom = false;
-            });
-          },
-          onFieldSubmitted: (newValue) => setState(() {
-            showBySearch = true;
-            showByCategory = false;
-            showByRandom = false;
-            definitionProvider.searchDefinitions(newValue);
-          }),
-          onSaved: (newValue) {
-            setState(() {
-              setState(() {
-                showBySearch = true;
-                showByCategory = false;
-                showByRandom = false;
-              });
-              definitionProvider.searchDefinitions(newValue);
-            });
+          onFieldSubmitted: (newValue) {
+            setState(() {});
           },
           controller: controller,
           keyboardType: TextInputType.name,
