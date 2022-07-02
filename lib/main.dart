@@ -22,9 +22,7 @@ class KBTIApp extends StatelessWidget {
     return MaterialApp(
       darkTheme: ThemeData.dark(),
       themeMode: ThemeMode.light,
-      theme: ThemeData(
-          splashColor: blueDarkColor,
-          textTheme: TextTheme(subtitle1: GoogleFonts.lato())),
+      theme: ThemeData(textTheme: TextTheme(subtitle1: GoogleFonts.lato())),
       debugShowCheckedModeBanner: false,
       title: 'KBTI',
       initialRoute: '/',

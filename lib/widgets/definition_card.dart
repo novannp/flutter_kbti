@@ -41,7 +41,7 @@ class DefinitionCard extends StatelessWidget {
               });
         },
         child: Padding(
-          padding: const EdgeInsets.all(15.0),
+          padding: const EdgeInsets.symmetric(horizontal: 14),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
