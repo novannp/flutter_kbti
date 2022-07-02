@@ -24,6 +24,7 @@ class DefinitionCard extends StatelessWidget {
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       child: InkWell(
+        borderRadius: BorderRadius.circular(20),
         onTap: () {
           showDialog(
               context: context,

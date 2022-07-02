@@ -63,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         // bottomNavigationBar: CustomBottomAppBar(),
         body: Padding(
-          padding: const EdgeInsets.only(top: 10, right: 20, left: 20),
+          padding: const EdgeInsets.only(top: 10, right: 14, left: 14),
           child: Column(
             children: [
               buildDropdown(dropdownProvider),
