@@ -295,7 +295,8 @@ class _HomeScreenState extends State<HomeScreen> {
             setState(() {});
           },
           controller: controller,
-          keyboardType: TextInputType.name,
+          keyboardType: TextInputType.text,
+          textInputAction: TextInputAction.search,
           style: const TextStyle(fontSize: 20),
           cursorColor: blueColor,
           decoration: InputDecoration(
