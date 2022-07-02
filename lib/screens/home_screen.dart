@@ -37,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     var definitionProvider = Provider.of<DefinitionProvider>(context);
-    definitionProvider.getDefinitions();
+    definitionProvider.getRandomDefinitions();
     definitionProvider.getDefinitionsByCategories(selectedIdValue);
 
     var dropdownProvider = Provider.of<DropdownProvider>(context);
@@ -236,7 +236,7 @@ class _HomeScreenState extends State<HomeScreen> {
   FutureBuilder<Object?> buildRandomDefinitions(
       DefinitionProvider definitionProvider) {
     return FutureBuilder(
-        future: definitionProvider.getDefinitions(),
+        future: definitionProvider.getRandomDefinitions(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             List data = snapshot.data as List;
