@@ -27,6 +27,9 @@ class AboutScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8),
               child: Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
                 child: Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
@@ -67,6 +70,9 @@ class AboutScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
