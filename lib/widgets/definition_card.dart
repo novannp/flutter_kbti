@@ -22,6 +22,7 @@ class DefinitionCard extends StatelessWidget {
     var dateFormatter = DateFormat('dd MMMM yyy');
     String formattedDate = dateFormatter.format(convertTime);
     return Card(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       child: InkWell(
         onTap: () {
           showDialog(
@@ -76,6 +77,7 @@ class DefinitionCard extends StatelessWidget {
                   SizedBox(width: 10),
                 ],
               ),
+              Divider(),
               Row(
                 // ignore: prefer_const_literals_to_create_immutables
                 children: [
