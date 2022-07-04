@@ -11,7 +11,7 @@ class ThemeProvider with ChangeNotifier {
 
   void toggleTheme(bool isOn) {
     themeMode = isOn ? ThemeMode.dark : ThemeMode.light;
-    isDarkMode = isOn;
+    preference.setTheme(isOn);
     notifyListeners();
   }
 }
