@@ -42,7 +42,11 @@ class DefinitionCard extends StatelessWidget {
               });
         },
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 14),
+          padding: const EdgeInsets.only(
+            left: 14,
+            right: 14,
+            bottom: 10,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -54,7 +58,7 @@ class DefinitionCard extends StatelessWidget {
                     style: GoogleFonts.lato(
                       fontSize: 30,
                       fontWeight: FontWeight.w600,
-                      color: blueColor,
+                      color: isDarkMode ? Colors.white60 : blueColor,
                     ),
                   ),
                   Spacer(),
@@ -102,6 +106,7 @@ class DefinitionCard extends StatelessWidget {
                   fontSize: 15,
                 ),
               ),
+              SizedBox(height: 5),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -150,7 +155,7 @@ class DefinitionCard extends StatelessWidget {
                       },
                       icon: Icon(
                         Icons.copy_rounded,
-                        color: blueColor,
+                        color: isDarkMode ? Colors.white60 : blueColor,
                       ))
                 ],
               )

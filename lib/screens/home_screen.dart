@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:kbti_app/providers/definition_provider.dart';
 import 'package:kbti_app/providers/dropdown_provider.dart';
 import 'package:kbti_app/screens/themes.dart';
+import 'package:kbti_app/widgets/custom_app_bar.dart';
 import 'package:kbti_app/widgets/definition_card.dart';
 import 'package:kbti_app/widgets/navigation_drawer.dart';
 import 'package:kbti_app/widgets/scroll_behaviour.dart';
@@ -30,7 +31,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void dispose() {
     controller.dispose();
-
     super.dispose();
   }
 
@@ -42,26 +42,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
     var dropdownProvider = Provider.of<DropdownProvider>(context);
     dropdownProvider.getCategory();
-
     return Scaffold(
         drawer: const NavigationDrawer(),
-        // floatingActionButtonLocation:
-        //     FloatingActionButtonLocation.miniEndDocked,
-        // floatingActionButton: FloatingActionButton(
-        //   backgroundColor: blueColor,
-        //   onPressed: () {},
-        //   child: Icon(Icons.add_rounded),
-        // ),
         resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-          backgroundColor: blueColor,
-          elevation: 2,
-          title: Image.asset(
-            'assets/images/logo.png',
-            height: 30,
-          ),
-        ),
-        // bottomNavigationBar: CustomBottomAppBar(),
+        appBar: buildAppBar(''),
         body: Padding(
           padding: const EdgeInsets.only(top: 10, right: 14, left: 14),
           child: Column(
@@ -93,7 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
             return Expanded(
               child: Center(
                 child: CircularProgressIndicator(
-                  color: blueColor,
+                  color: isDarkMode ? Colors.white : blueColor,
                 ),
               ),
             );
@@ -163,7 +147,7 @@ class _HomeScreenState extends State<HomeScreen> {
             return Expanded(
               child: Center(
                 child: CircularProgressIndicator(
-                  color: blueColor,
+                  color: isDarkMode ? Colors.white : blueColor,
                 ),
               ),
             );
@@ -178,7 +162,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     style: GoogleFonts.lato(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
-                      color: blueColor,
+                      color: isDarkMode ? Colors.white : blueColor,
                     )),
                 const SizedBox(height: 15),
                 ScrollConfiguration(
@@ -224,11 +208,11 @@ class _HomeScreenState extends State<HomeScreen> {
             ));
           } else {
             CircularProgressIndicator(
-              color: blueColor,
+              color: isDarkMode ? Colors.white : blueColor,
             );
           }
           return CircularProgressIndicator(
-            color: blueColor,
+            color: isDarkMode ? Colors.white : blueColor,
           );
         });
   }
@@ -286,30 +270,43 @@ class _HomeScreenState extends State<HomeScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        TextFormField(
-          onFieldSubmitted: (newValue) {
-            setState(() {
-              showByCategory = false;
-              showBySearch = true;
-            });
-          },
-          controller: controller,
-          keyboardType: TextInputType.text,
-          textInputAction: TextInputAction.search,
-          style: const TextStyle(fontSize: 20),
-          cursorColor: blueColor,
-          decoration: InputDecoration(
-              contentPadding:
-                  const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-              hintText: 'Cari Istilah',
-              hintStyle: TextStyle(fontSize: 20, color: blueColor),
-              border: OutlineInputBorder(
-                borderSide: BorderSide(color: greyColor),
-                borderRadius: BorderRadius.circular(30),
+        Card(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextFormField(
+              onFieldSubmitted: (newValue) {
+                setState(() {
+                  showByCategory = false;
+                  showBySearch = true;
+                });
+              },
+              controller: controller,
+              keyboardType: TextInputType.text,
+              textInputAction: TextInputAction.search,
+              style: GoogleFonts.lato(
+                fontSize: 18,
+                color: isDarkMode ? Colors.white : Colors.black,
               ),
-              focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: greyColor.withOpacity(0.5)),
-                  borderRadius: BorderRadius.circular(30))),
+              cursorColor: isDarkMode ? Colors.white : blueColor,
+              decoration: InputDecoration(
+                  contentPadding:
+                      const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+                  hintText: 'Cari Istilah',
+                  hintStyle: GoogleFonts.lato(
+                    fontSize: 18,
+                    color: isDarkMode ? Colors.white : blueColor,
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: greyColor.withOpacity(0.4)),
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: greyColor.withOpacity(0.8)),
+                      borderRadius: BorderRadius.circular(30))),
+            ),
+          ),
         ),
       ],
     );
@@ -337,13 +334,20 @@ class _HomeScreenState extends State<HomeScreen> {
                 List<DropdownMenuItem<String>> items = (snapshot.data)
                     .map<DropdownMenuItem<String>>((e) => DropdownMenuItem(
                         value: e.id.toString(),
-                        child: Text(e.category.toString())))
+                        child: Text(
+                          e.category.toString(),
+                          style: TextStyle(
+                            color: isDarkMode ? Colors.white : Colors.black,
+                          ),
+                        )))
                     .toList();
                 return DropdownButton<String>(
+                    style: GoogleFonts.lato(),
+                    dropdownColor:
+                        isDarkMode ? const Color(0xff23272a) : Colors.white,
                     alignment: Alignment.centerRight,
                     elevation: 2,
                     borderRadius: BorderRadius.circular(30),
-                    dropdownColor: Colors.white,
                     value: selectedIdValue,
                     items: items,
                     onChanged: (changedValue) {

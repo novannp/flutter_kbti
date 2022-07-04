@@ -4,6 +4,7 @@ import 'package:kbti_app/widgets/avatar_developer.dart';
 import 'package:kbti_app/widgets/navigation_drawer.dart';
 import 'package:kbti_app/widgets/scroll_behaviour.dart';
 
+import '../widgets/custom_app_bar.dart';
 import 'themes.dart';
 
 class AboutScreen extends StatelessWidget {
@@ -12,13 +13,7 @@ class AboutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          backgroundColor: blueColor,
-          elevation: 2,
-          title: Text(
-            'Tentang',
-            style: GoogleFonts.lato(fontSize: 20),
-          )),
+      appBar: buildAppBar('Tentang'),
       drawer: const NavigationDrawer(),
       body: ScrollConfiguration(
         behavior: MyBehavior(),
@@ -42,7 +37,7 @@ class AboutScreen extends StatelessWidget {
                         style: GoogleFonts.lato(
                           fontSize: 26,
                           fontWeight: FontWeight.bold,
-                          color: blueColor,
+                          color: isDarkMode ? Colors.white : blueColor,
                         ),
                       ),
                       const Divider(),
@@ -83,7 +78,7 @@ class AboutScreen extends StatelessWidget {
                         style: GoogleFonts.lato(
                           fontSize: 26,
                           fontWeight: FontWeight.bold,
-                          color: blueColor,
+                          color: isDarkMode ? Colors.white : blueColor,
                         ),
                       ),
                       const Divider(),

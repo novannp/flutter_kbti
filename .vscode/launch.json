@@ -7,7 +7,10 @@
         {
             "name": "kbti_app",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+            "args": [
+                "--verbose"
+            ]
         },
         {
             "name": "kbti_app (profile mode)",

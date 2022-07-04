@@ -1,14 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:kbti_app/prefs/theme_preference.dart';
 import 'package:kbti_app/screens/dashboard_screen.dart';
+import 'package:kbti_app/screens/settings_screen.dart';
 import 'package:kbti_app/screens/themes.dart';
 import 'package:kbti_app/widgets/drawer_list_tile.dart';
-
+import 'package:kbti_app/widgets/switch_dark_mode.dart';
+import 'package:provider/provider.dart';
 import '../screens/about_screen.dart';
 import '../screens/home_screen.dart';
 
-class NavigationDrawer extends StatelessWidget {
+class NavigationDrawer extends StatefulWidget {
   const NavigationDrawer({Key? key}) : super(key: key);
+
+  @override
+  State<NavigationDrawer> createState() => _NavigationDrawerState();
+}
+
+class _NavigationDrawerState extends State<NavigationDrawer> {
+  ThemePreference themePreference = ThemePreference();
 
   @override
   Widget build(BuildContext context) {
@@ -79,6 +89,16 @@ class NavigationDrawer extends StatelessWidget {
                   }));
                 },
               ),
+              DrawerListTile(
+                  title: 'Pengaturan',
+                  icon: Icon(Icons.settings_rounded, color: blueColor),
+                  onTap: () {
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const SettingsScreen()),
+                        ((route) => true));
+                  }),
               DrawerListTile(
                 title: 'Logout',
                 icon: Icon(Icons.logout_rounded, color: blueColor),

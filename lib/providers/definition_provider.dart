@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:kbti_app/configs/apiEndPoints.dart';
 import 'package:kbti_app/models/definition.dart';
+import '../configs/config.dart';
 import '../models/term.dart';
 
 class DefinitionProvider extends ChangeNotifier {
@@ -26,7 +27,7 @@ class DefinitionProvider extends ChangeNotifier {
   }
 
   getDefinitionsByCategories(id) async {
-    var url = Uri.parse('${apiEndPoint['GET_DEFINITION_BY_CATEGORY']}$id');
+    var url = Uri.parse('$baseUrl/definitions?categoryId=$id');
     var result = await http.get(url);
 
     if (result.statusCode == 200) {

@@ -31,9 +31,11 @@ class AvatarDeveloper extends StatelessWidget {
           child: Text(
             name,
             textAlign: TextAlign.center,
-            style: GoogleFonts.lato(fontSize: 18, color: blueColor),
+            style: GoogleFonts.lato(
+                fontSize: 18, color: isDarkMode ? Colors.white : blueColor),
           ),
         ),
+        const SizedBox(width: 130, child: Divider()),
         Text(
           collage,
           style: GoogleFonts.lato(fontSize: 14),
