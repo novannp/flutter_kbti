@@ -15,17 +15,9 @@ class _ChipCategoryState extends State<ChipCategory> {
   @override
   Widget build(BuildContext context) {
     return Chip(
-        elevation: 0,
-        side: BorderSide(color: greyColor, width: 2),
-        backgroundColor:
-            isDarkMode ? Color.fromARGB(255, 44, 44, 44) : bgChipColor,
-        label: Text(
-          widget.label,
-          style: GoogleFonts.lato(
-            fontSize: 12,
-            color: isDarkMode ? Colors.white : blueColor,
-            fontWeight: FontWeight.bold,
-          ),
-        ));
+      elevation: 0,
+      side: BorderSide(color: greyColor, width: 2),
+      label: Text(widget.label),
+    );
   }
 }

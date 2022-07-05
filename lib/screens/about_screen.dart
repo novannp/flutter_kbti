@@ -32,14 +32,8 @@ class AboutScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const SizedBox(height: 10),
-                      Text(
-                        'Tentang Aplikasi',
-                        style: GoogleFonts.lato(
-                          fontSize: 26,
-                          fontWeight: FontWeight.bold,
-                          color: isDarkMode ? Colors.white : blueColor,
-                        ),
-                      ),
+                      Text('Tentang Aplikasi',
+                          style: Theme.of(context).textTheme.headline2),
                       const Divider(),
                       const SizedBox(height: 10),
                       Image.asset(
@@ -73,14 +67,8 @@ class AboutScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       const SizedBox(height: 20),
-                      Text(
-                        'Tim Pengembang',
-                        style: GoogleFonts.lato(
-                          fontSize: 26,
-                          fontWeight: FontWeight.bold,
-                          color: isDarkMode ? Colors.white : blueColor,
-                        ),
-                      ),
+                      Text('Tim Pengembang',
+                          style: Theme.of(context).textTheme.headline2),
                       const Divider(),
                       const SizedBox(height: 10),
                       Wrap(

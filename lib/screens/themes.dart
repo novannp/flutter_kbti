@@ -1,17 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+bool isDarkMode = false;
 Color blueColor = const Color(0xff1d2a57);
 Color greyColor = const Color(0xffdadce0);
 Color bgChipColor = const Color(0xfff2f7ff);
 Color blueDarkColor = const Color(0xFF08133A);
 
-bool isDarkMode = false;
-
 ThemeData darkTheme = ThemeData(
     brightness: Brightness.dark,
     appBarTheme: const AppBarTheme(
       backgroundColor: Color(0xff23272a),
+    ),
+    chipTheme: ChipThemeData(
+      backgroundColor: Color.fromARGB(255, 44, 44, 44),
+      labelStyle: GoogleFonts.lato(
+        fontSize: 12,
+        color: Colors.white,
+        fontWeight: FontWeight.bold,
+      ),
     ),
     listTileTheme: ListTileThemeData(iconColor: Colors.white),
     dialogTheme: DialogTheme(
@@ -34,6 +41,11 @@ ThemeData darkTheme = ThemeData(
           fontWeight: FontWeight.w600,
           color: Colors.white60,
         ),
+        headline2: GoogleFonts.lato(
+          fontSize: 26,
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
+        ),
         headline3: GoogleFonts.lato(
           fontSize: 20,
           fontWeight: FontWeight.bold,
@@ -50,14 +62,28 @@ ThemeData darkTheme = ThemeData(
         )));
 
 ThemeData lightTheme = ThemeData(
+  primaryColor: blueColor,
   brightness: Brightness.light,
   appBarTheme: AppBarTheme(backgroundColor: blueColor),
+  chipTheme: ChipThemeData(
+    backgroundColor: bgChipColor,
+    labelStyle: GoogleFonts.lato(
+      fontSize: 12,
+      color: blueColor,
+      fontWeight: FontWeight.bold,
+    ),
+  ),
   iconTheme: IconThemeData(color: blueColor),
   listTileTheme: ListTileThemeData(iconColor: blueColor),
   textTheme: TextTheme(
     headline1: GoogleFonts.lato(
       fontSize: 30,
       fontWeight: FontWeight.w600,
+      color: blueColor,
+    ),
+    headline2: GoogleFonts.lato(
+      fontSize: 26,
+      fontWeight: FontWeight.bold,
       color: blueColor,
     ),
     headline3: GoogleFonts.lato(

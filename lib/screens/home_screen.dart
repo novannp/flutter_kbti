@@ -74,11 +74,9 @@ class _HomeScreenState extends State<HomeScreen> {
             definitionProvider.searchDefinitions(controller.text.toString()),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Expanded(
+            return const Expanded(
               child: Center(
-                child: CircularProgressIndicator(
-                  color: isDarkMode ? Colors.white : blueColor,
-                ),
+                child: CircularProgressIndicator(),
               ),
             );
           } else if (snapshot.hasData) {
@@ -144,11 +142,9 @@ class _HomeScreenState extends State<HomeScreen> {
         future: definitionProvider.getDefinitionsByCategories(selectedIdValue),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Expanded(
+            return const Expanded(
               child: Center(
-                child: CircularProgressIndicator(
-                  color: isDarkMode ? Colors.white : blueColor,
-                ),
+                child: CircularProgressIndicator(),
               ),
             );
           } else if (snapshot.hasData) {
@@ -159,11 +155,7 @@ class _HomeScreenState extends State<HomeScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text('Kategori dari "${data[index].category}" :',
-                    style: GoogleFonts.lato(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: isDarkMode ? Colors.white : blueColor,
-                    )),
+                    style: Theme.of(context).textTheme.headline2),
                 const SizedBox(height: 15),
                 ScrollConfiguration(
                   behavior: MyBehavior(),
@@ -207,13 +199,9 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ));
           } else {
-            CircularProgressIndicator(
-              color: isDarkMode ? Colors.white : blueColor,
-            );
+            CircularProgressIndicator();
           }
-          return CircularProgressIndicator(
-            color: isDarkMode ? Colors.white : blueColor,
-          );
+          return CircularProgressIndicator();
         });
   }
 
@@ -285,19 +273,12 @@ class _HomeScreenState extends State<HomeScreen> {
               controller: controller,
               keyboardType: TextInputType.text,
               textInputAction: TextInputAction.search,
-              style: GoogleFonts.lato(
-                fontSize: 18,
-                color: isDarkMode ? Colors.white : Colors.black,
-              ),
-              cursorColor: isDarkMode ? Colors.white : blueColor,
+              style: Theme.of(context).textTheme.headline4,
               decoration: InputDecoration(
                   contentPadding:
                       const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
                   hintText: 'Cari Istilah',
-                  hintStyle: GoogleFonts.lato(
-                    fontSize: 18,
-                    color: isDarkMode ? Colors.white : blueColor,
-                  ),
+                  hintStyle: Theme.of(context).textTheme.headline4,
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: greyColor.withOpacity(0.4)),
                     borderRadius: BorderRadius.circular(30),
@@ -333,15 +314,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         value: e.id.toString(),
                         child: Text(
                           e.category.toString(),
-                          style: TextStyle(
-                            color: isDarkMode ? Colors.white : Colors.black,
-                          ),
+                          style: Theme.of(context).textTheme.subtitle1,
                         )))
                     .toList();
                 return DropdownButton<String>(
                     style: GoogleFonts.lato(),
-                    dropdownColor:
-                        isDarkMode ? const Color(0xff23272a) : Colors.white,
                     alignment: Alignment.centerRight,
                     elevation: 2,
                     borderRadius: BorderRadius.circular(30),

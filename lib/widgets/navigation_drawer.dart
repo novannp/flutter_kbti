@@ -135,12 +135,10 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                 },
               ),
               ListTile(
-                leading: Icon(Icons.dark_mode,
-                    color: isDarkMode ? Colors.white : blueColor),
+                leading: Icon(Icons.dark_mode),
                 title: Text(
                   'Dark mode',
-                  style: GoogleFonts.lato(
-                      color: isDarkMode ? Colors.white : blueColor),
+                  style: Theme.of(context).textTheme.bodyText1,
                 ),
                 trailing: const SwitchDarkMode(),
               ),
