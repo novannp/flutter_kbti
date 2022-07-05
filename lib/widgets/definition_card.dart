@@ -143,10 +143,7 @@ class DefinitionCard extends StatelessWidget {
                               );
                             });
                       },
-                      icon: Icon(
-                        Icons.copy_rounded,
-                        color: isDarkMode ? Colors.white60 : blueColor,
-                      ))
+                      icon: Icon(Icons.copy_rounded))
                 ],
               )
             ],

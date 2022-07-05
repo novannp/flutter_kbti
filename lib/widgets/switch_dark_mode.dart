@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kbti_app/prefs/theme_preference.dart';
 import 'package:kbti_app/screens/themes.dart';
 import 'package:provider/provider.dart';
 import '../main.dart';
@@ -15,6 +16,7 @@ class _SwitchDarkModeState extends State<SwitchDarkMode> {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
+    final prefs = ThemePreference();
     return Switch(
         activeColor: Colors.white,
         value: themeProvider.isDarkModeOn,

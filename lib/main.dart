@@ -25,13 +25,19 @@ class KBTIApp extends StatefulWidget {
 
 class _KBTIAppState extends State<KBTIApp> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    final prefs = ThemePreference();
+    prefs.getTheme();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer(
       builder: (context, value, child) {
         final themeProvider = Provider.of<ThemeProvider>(context);
         return MaterialApp(
-          // darkTheme: darkTheme,
           darkTheme: darkTheme,
           theme: lightTheme,
           themeMode: themeProvider.themeMode,

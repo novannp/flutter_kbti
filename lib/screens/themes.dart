@@ -8,6 +8,7 @@ Color bgChipColor = const Color(0xfff2f7ff);
 Color blueDarkColor = const Color(0xFF08133A);
 
 ThemeData darkTheme = ThemeData(
+    progressIndicatorTheme: ProgressIndicatorThemeData(color: Colors.white),
     brightness: Brightness.dark,
     appBarTheme: const AppBarTheme(
       backgroundColor: Color(0xff23272a),
@@ -62,6 +63,7 @@ ThemeData darkTheme = ThemeData(
         )));
 
 ThemeData lightTheme = ThemeData(
+  progressIndicatorTheme: ProgressIndicatorThemeData(color: blueColor),
   primaryColor: blueColor,
   brightness: Brightness.light,
   appBarTheme: AppBarTheme(backgroundColor: blueColor),
