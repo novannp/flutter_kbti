@@ -23,7 +23,7 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
+      color: Theme.of(context).canvasColor,
       height: double.infinity,
       width: (MediaQuery.of(context).size.width) * 0.65,
       child: Stack(
@@ -64,7 +64,7 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
               ),
               DrawerListTile(
                 title: 'Dashboard',
-                icon: Icon(Icons.dashboard_rounded, color: blueColor),
+                icon: Icon(Icons.dashboard_rounded),
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return const DashboardScreen();
@@ -73,7 +73,7 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
               ),
               DrawerListTile(
                 title: 'Pencarian',
-                icon: Icon(Icons.search_rounded, color: blueColor),
+                icon: Icon(Icons.search_rounded),
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return const HomeScreen();
@@ -82,7 +82,7 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
               ),
               DrawerListTile(
                 title: 'Tentang',
-                icon: Icon(Icons.info_outline_rounded, color: blueColor),
+                icon: Icon(Icons.info_outline_rounded),
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return const AboutScreen();
@@ -91,7 +91,7 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
               ),
               DrawerListTile(
                   title: 'Pengaturan',
-                  icon: Icon(Icons.settings_rounded, color: blueColor),
+                  icon: Icon(Icons.settings_rounded),
                   onTap: () {
                     Navigator.pushAndRemoveUntil(
                         context,
@@ -101,7 +101,7 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                   }),
               DrawerListTile(
                 title: 'Logout',
-                icon: Icon(Icons.logout_rounded, color: blueColor),
+                icon: const Icon(Icons.logout_rounded),
                 onTap: () {
                   showDialog(
                     context: context,
@@ -133,6 +133,16 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                     },
                   );
                 },
+              ),
+              ListTile(
+                leading: Icon(Icons.dark_mode,
+                    color: isDarkMode ? Colors.white : blueColor),
+                title: Text(
+                  'Dark mode',
+                  style: GoogleFonts.lato(
+                      color: isDarkMode ? Colors.white : blueColor),
+                ),
+                trailing: const SwitchDarkMode(),
               ),
               const Spacer(),
               Padding(

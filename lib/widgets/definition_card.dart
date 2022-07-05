@@ -30,14 +30,12 @@ class DefinitionCard extends StatelessWidget {
               context: context,
               builder: (BuildContext contect) {
                 return AlertDialog(
-                  title: Text(
-                    definition.term,
-                    style: GoogleFonts.lato(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                    ),
+                  title: Text(definition.term,
+                      style: Theme.of(context).textTheme.headline4),
+                  content: Text(
+                    definition.definition,
+                    style: Theme.of(context).textTheme.subtitle1,
                   ),
-                  content: Text(definition.definition),
                 );
               });
         },
@@ -55,11 +53,7 @@ class DefinitionCard extends StatelessWidget {
                 children: [
                   Text(
                     definition.term,
-                    style: GoogleFonts.lato(
-                      fontSize: 30,
-                      fontWeight: FontWeight.w600,
-                      color: isDarkMode ? Colors.white60 : blueColor,
-                    ),
+                    style: Theme.of(context).textTheme.headline1,
                   ),
                   Spacer(),
                   GestureDetector(
@@ -100,12 +94,8 @@ class DefinitionCard extends StatelessWidget {
                 ],
               ),
               SizedBox(height: 10),
-              Text(
-                definition.definition,
-                style: GoogleFonts.lato(
-                  fontSize: 15,
-                ),
-              ),
+              Text(definition.definition,
+                  style: Theme.of(context).textTheme.subtitle1),
               SizedBox(height: 5),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

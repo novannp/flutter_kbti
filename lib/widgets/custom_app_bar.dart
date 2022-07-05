@@ -5,7 +5,6 @@ import '../screens/themes.dart';
 
 AppBar buildAppBar(String title) {
   return AppBar(
-      backgroundColor: isDarkMode ? Color(0xff23272a) : blueColor,
       elevation: 2,
       title: title == ''
           ? Image.asset(

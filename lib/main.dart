@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kbti_app/prefs/theme_preference.dart';
 import 'package:kbti_app/providers/definition_provider.dart';
 import 'package:kbti_app/providers/dropdown_provider.dart';
 import 'package:kbti_app/screens/splash_screen.dart';

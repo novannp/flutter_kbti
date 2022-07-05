@@ -322,10 +322,7 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           Text(
             'Kategori',
-            style: GoogleFonts.lato(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
+            style: Theme.of(context).textTheme.headline3,
           ),
           FutureBuilder(
             future: dropdownProvider.getCategory(),

@@ -15,7 +15,7 @@ class DrawerListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.white,
+      color: Theme.of(context).canvasColor,
       child: InkWell(
         splashColor: blueDarkColor,
         onTap: onTap,
@@ -23,7 +23,7 @@ class DrawerListTile extends StatelessWidget {
           leading: icon,
           title: Text(
             title,
-            style: GoogleFonts.lato(fontSize: 16, color: blueColor),
+            style: Theme.of(context).textTheme.bodyText1,
           ),
         ),
       ),
