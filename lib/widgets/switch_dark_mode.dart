@@ -15,15 +15,17 @@ class SwitchDarkMode extends StatefulWidget {
 class _SwitchDarkModeState extends State<SwitchDarkMode> {
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
-    final prefs = ThemePreference();
+    final ThemeProvider themeProvider = Provider.of<ThemeProvider>(context);
+    final ThemePreference prefs = ThemePreference();
     return Switch(
         activeColor: Colors.white,
-        value: themeProvider.isDarkModeOn,
+        value: isDarkMode,
         onChanged: (value) {
           final provider = Provider.of<ThemeProvider>(context, listen: false);
           provider.toggleTheme(value);
-          setState(() {});
+          setState(() {
+            isDarkMode = value;
+          });
         });
   }
 }

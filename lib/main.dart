@@ -24,12 +24,15 @@ class KBTIApp extends StatefulWidget {
 }
 
 class _KBTIAppState extends State<KBTIApp> {
+  final ThemeProvider themeProvider = ThemeProvider();
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    final prefs = ThemePreference();
-    prefs.getTheme();
+    getCurrentTheme();
+  }
+
+  void getCurrentTheme() async {
+    isDarkMode = await ThemePreference().getTheme();
   }
 
   @override
