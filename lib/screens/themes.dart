@@ -3,11 +3,14 @@ import 'package:google_fonts/google_fonts.dart';
 
 bool isDarkMode = false;
 Color blueColor = const Color(0xff1d2a57);
+Color blueColorAccent = const Color(0xff1358B4);
 Color greyColor = const Color(0xffdadce0);
 Color bgChipColor = const Color(0xfff2f7ff);
 Color blueDarkColor = const Color(0xFF08133A);
 
 ThemeData darkTheme = ThemeData(
+    elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(primary: blueColorAccent)),
     progressIndicatorTheme: ProgressIndicatorThemeData(color: Colors.white),
     brightness: Brightness.dark,
     appBarTheme: const AppBarTheme(
@@ -57,6 +60,10 @@ ThemeData darkTheme = ThemeData(
           fontSize: 18,
           color: Colors.white,
         ),
+        headline5: GoogleFonts.lato(
+          fontSize: 15,
+          fontWeight: FontWeight.bold,
+        ),
         headline6: GoogleFonts.lato(
           fontSize: 12,
           fontWeight: FontWeight.bold,
@@ -67,6 +74,8 @@ ThemeData darkTheme = ThemeData(
         )));
 
 ThemeData lightTheme = ThemeData(
+  elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(primary: blueColor)),
   progressIndicatorTheme: ProgressIndicatorThemeData(color: blueColor),
   primaryColor: blueColor,
   brightness: Brightness.light,
@@ -101,6 +110,10 @@ ThemeData lightTheme = ThemeData(
       fontWeight: FontWeight.bold,
       fontSize: 18,
       color: Colors.black,
+    ),
+    headline5: GoogleFonts.lato(
+      fontSize: 15,
+      fontWeight: FontWeight.bold,
     ),
     headline6: GoogleFonts.lato(
       fontSize: 12,
