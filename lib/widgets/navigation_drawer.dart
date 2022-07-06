@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kbti_app/screens/dashboard_screen.dart';
+import 'package:kbti_app/screens/login_screen.dart';
 import 'package:kbti_app/screens/settings_screen.dart';
 import 'package:kbti_app/screens/themes.dart';
 import 'package:kbti_app/widgets/drawer_list_tile.dart';
@@ -49,10 +50,12 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
+                      overflow: TextOverflow.ellipsis,
                     ),
                     Text(
                       'novangarut@gmail.com',
                       style: GoogleFonts.lato(color: Colors.grey[400]),
+                      overflow: TextOverflow.ellipsis,
                     )
                   ],
                 ),
@@ -99,34 +102,7 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                 icon: const Icon(Icons.logout_rounded),
                 onTap: () {
                   showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: Text(
-                          'Anda yakin ingin Logout ?',
-                          style: GoogleFonts.lato(
-                              fontWeight: FontWeight.bold, color: blueColor),
-                        ),
-                        content: const Text('Mohon maaf belum bisa :)'),
-                        actions: [
-                          Center(
-                            child: SizedBox(
-                              width: double.infinity,
-                              child: TextButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Text(
-                                  'OK',
-                                  style: GoogleFonts.lato(color: blueColor),
-                                ),
-                              ),
-                            ),
-                          )
-                        ],
-                      );
-                    },
-                  );
+                      context: context, builder: (context) => popupLogout());
                 },
               ),
               const Spacer(),
@@ -141,6 +117,39 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget popupLogout() {
+    return AlertDialog(
+      title: Text(
+        'Anda yakin ingin Logout ?',
+        style: Theme.of(context).textTheme.headline5,
+      ),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(
+                  builder: (context) => LoginScreen(),
+                ),
+                (route) => false);
+          },
+          child: Text(
+            'Ya',
+            style: Theme.of(context).textTheme.bodyText1,
+          ),
+        ),
+        TextButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: Text(
+            'Tidak',
+            style: Theme.of(context).textTheme.bodyText1,
+          ),
+        )
+      ],
     );
   }
 }

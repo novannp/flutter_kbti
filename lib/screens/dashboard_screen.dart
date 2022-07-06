@@ -16,7 +16,9 @@ class DashboardScreen extends StatelessWidget {
       body: Center(
         child: Text(
           'Dashboad Screen soon...',
-          style: GoogleFonts.lato(fontSize: 20, color: blueColor),
+          style: GoogleFonts.lato(
+            fontSize: 20,
+          ),
         ),
       ),
     );
