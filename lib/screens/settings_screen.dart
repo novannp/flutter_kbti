@@ -23,7 +23,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     return Scaffold(
       appBar: buildAppBar('Pengaturan'),
       body: Padding(
-        padding: EdgeInsets.only(top: 14, left: 14, right: 14),
+        padding: const EdgeInsets.only(top: 14, left: 14, right: 14),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -41,20 +41,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           'Pilih tema',
                           style: Theme.of(context).textTheme.headline4,
                         ),
-                        content: Container(
+                        content: SizedBox(
                             width: 300,
                             height: 180,
                             child: buildRadioButton(themeProvider)),
                       );
                     });
               },
-              leading: Padding(
-                padding: const EdgeInsets.all(8.0),
+              leading: const Padding(
+                padding: EdgeInsets.all(8.0),
                 child: Icon(
                   Icons.dark_mode_rounded,
                 ),
               ),
-              title: Text('Tema'),
+              title: const Text('Tema'),
               subtitle: Text(selectedValue.capitalize()),
             ),
           ],

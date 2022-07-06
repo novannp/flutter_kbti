@@ -4,7 +4,6 @@ import 'package:kbti_app/screens/dashboard_screen.dart';
 import 'package:kbti_app/screens/settings_screen.dart';
 import 'package:kbti_app/screens/themes.dart';
 import 'package:kbti_app/widgets/drawer_list_tile.dart';
-import 'package:provider/provider.dart';
 import '../screens/about_screen.dart';
 import '../screens/home_screen.dart';
 
@@ -60,7 +59,7 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
               ),
               DrawerListTile(
                 title: 'Dashboard',
-                icon: Icon(Icons.dashboard_rounded),
+                icon: const Icon(Icons.dashboard_rounded),
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return const DashboardScreen();
@@ -69,7 +68,7 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
               ),
               DrawerListTile(
                 title: 'Pencarian',
-                icon: Icon(Icons.search_rounded),
+                icon: const Icon(Icons.search_rounded),
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return const HomeScreen();
@@ -78,7 +77,7 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
               ),
               DrawerListTile(
                 title: 'Tentang',
-                icon: Icon(Icons.info_outline_rounded),
+                icon: const Icon(Icons.info_outline_rounded),
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return const AboutScreen();
@@ -87,12 +86,12 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
               ),
               DrawerListTile(
                   title: 'Pengaturan',
-                  icon: Icon(Icons.settings_rounded),
+                  icon: const Icon(Icons.settings_rounded),
                   onTap: () {
                     Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => SettingsScreen()),
+                            builder: (context) => const SettingsScreen()),
                         ((route) => true));
                   }),
               DrawerListTile(
