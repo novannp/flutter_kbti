@@ -8,7 +8,7 @@ class ThemeProvider with ChangeNotifier {
     if (currentTheme == 'light') {
       return ThemeMode.light;
     } else if (currentTheme == 'dark') {
-      return ThemeMode.light;
+      return ThemeMode.dark;
     } else {
       return ThemeMode.system;
     }
