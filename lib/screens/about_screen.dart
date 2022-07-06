@@ -72,6 +72,7 @@ class AboutScreen extends StatelessWidget {
                       const Divider(),
                       const SizedBox(height: 10),
                       Wrap(
+                        alignment: WrapAlignment.spaceBetween,
                         spacing: 20,
                         runSpacing: 20,
                         children: const [
@@ -84,7 +85,7 @@ class AboutScreen extends StatelessWidget {
                               networkImage: 'https://picsum.photos/300',
                               collage: 'Institut Teknologi Garut'),
                           AvatarDeveloper(
-                              name: 'Tryo Asnafi',
+                              name: 'Tryo Asnafi\n',
                               networkImage: 'https://picsum.photos/400',
                               collage: 'Politeknik Negeri Bengkalis'),
                           AvatarDeveloper(
