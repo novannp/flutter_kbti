@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:kbti_app/prefs/theme_preference.dart';
 import 'package:kbti_app/providers/definition_provider.dart';
 import 'package:kbti_app/providers/dropdown_provider.dart';
 import 'package:kbti_app/screens/splash_screen.dart';
 import 'package:kbti_app/screens/themes.dart';
 import 'package:provider/provider.dart';
-import 'providers/theme_mode_provider.dart';
+import 'providers/theme_provider.dart';
 import 'screens/home_screen.dart';
 
 void main() {
@@ -25,15 +24,6 @@ class KBTIApp extends StatefulWidget {
 
 class _KBTIAppState extends State<KBTIApp> {
   final ThemeProvider themeProvider = ThemeProvider();
-  @override
-  void initState() {
-    super.initState();
-    getCurrentTheme();
-  }
-
-  void getCurrentTheme() async {
-    isDarkMode = await ThemePreference().getTheme();
-  }
 
   @override
   Widget build(BuildContext context) {

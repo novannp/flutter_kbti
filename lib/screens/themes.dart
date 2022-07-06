@@ -57,6 +57,10 @@ ThemeData darkTheme = ThemeData(
           fontSize: 18,
           color: Colors.white,
         ),
+        headline6: GoogleFonts.lato(
+          fontSize: 12,
+          fontWeight: FontWeight.bold,
+        ),
         bodyText1: GoogleFonts.lato(fontSize: 16, color: Colors.white),
         bodyText2: GoogleFonts.lato(
           color: const Color.fromARGB(255, 233, 233, 233),
@@ -97,6 +101,11 @@ ThemeData lightTheme = ThemeData(
       fontWeight: FontWeight.bold,
       fontSize: 18,
       color: Colors.black,
+    ),
+    headline6: GoogleFonts.lato(
+      fontSize: 12,
+      fontWeight: FontWeight.bold,
+      color: blueColor,
     ),
     bodyText1: GoogleFonts.lato(fontSize: 16, color: blueColor),
     subtitle1: GoogleFonts.lato(),

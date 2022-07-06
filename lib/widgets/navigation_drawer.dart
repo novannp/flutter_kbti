@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:kbti_app/prefs/theme_preference.dart';
 import 'package:kbti_app/screens/dashboard_screen.dart';
 import 'package:kbti_app/screens/settings_screen.dart';
 import 'package:kbti_app/screens/themes.dart';
 import 'package:kbti_app/widgets/drawer_list_tile.dart';
-import 'package:kbti_app/widgets/switch_dark_mode.dart';
 import 'package:provider/provider.dart';
 import '../screens/about_screen.dart';
 import '../screens/home_screen.dart';
@@ -18,8 +16,6 @@ class NavigationDrawer extends StatefulWidget {
 }
 
 class _NavigationDrawerState extends State<NavigationDrawer> {
-  ThemePreference themePreference = ThemePreference();
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -96,7 +92,7 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                     Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const SettingsScreen()),
+                            builder: (context) => SettingsScreen()),
                         ((route) => true));
                   }),
               DrawerListTile(
@@ -133,14 +129,6 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                     },
                   );
                 },
-              ),
-              ListTile(
-                leading: Icon(Icons.dark_mode),
-                title: Text(
-                  'Dark mode',
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-                trailing: const SwitchDarkMode(),
               ),
               const Spacer(),
               Padding(
