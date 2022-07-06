@@ -49,10 +49,12 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
+                      overflow: TextOverflow.ellipsis,
                     ),
                     Text(
                       'novangarut@gmail.com',
                       style: GoogleFonts.lato(color: Colors.grey[400]),
+                      overflow: TextOverflow.ellipsis,
                     )
                   ],
                 ),
@@ -105,7 +107,8 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                         title: Text(
                           'Anda yakin ingin Logout ?',
                           style: GoogleFonts.lato(
-                              fontWeight: FontWeight.bold, color: blueColor),
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                         content: const Text('Mohon maaf belum bisa :)'),
                         actions: [
@@ -118,7 +121,7 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                                 },
                                 child: Text(
                                   'OK',
-                                  style: GoogleFonts.lato(color: blueColor),
+                                  style: GoogleFonts.lato(),
                                 ),
                               ),
                             ),
