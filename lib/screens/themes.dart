@@ -74,6 +74,7 @@ ThemeData darkTheme = ThemeData(
         )));
 
 ThemeData lightTheme = ThemeData(
+  scaffoldBackgroundColor: bgChipColor,
   elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(primary: blueColor)),
   progressIndicatorTheme: ProgressIndicatorThemeData(color: blueColor),

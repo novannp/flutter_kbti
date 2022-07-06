@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:kbti_app/screens/signup.screen.dart';
+import 'package:kbti_app/screens/login_screen.dart';
 import 'package:kbti_app/screens/themes.dart';
 import 'package:kbti_app/widgets/button.dart';
 import 'package:kbti_app/widgets/form_input.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class SignupScreen extends StatelessWidget {
+  const SignupScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class LoginScreen extends StatelessWidget {
           height: 10,
         ),
         Text(
-          "Masuk",
+          "Daftar",
           style: Theme.of(context).textTheme.headline2,
         ),
         const SizedBox(
@@ -33,6 +33,13 @@ class LoginScreen extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            FormInput(
+              title: 'Username',
+              hint: 'Username Anda',
+            ),
+            const SizedBox(
+              height: 20,
+            ),
             FormInput(
               title: 'Email',
               hint: 'Email Anda',
@@ -53,7 +60,7 @@ class LoginScreen extends StatelessWidget {
             margin: const EdgeInsets.symmetric(horizontal: 50),
             width: double.infinity,
             child: ButtonMe(
-              title: 'Masuk',
+              title: 'Daftar',
               function: () => Navigator.pushNamedAndRemoveUntil(
                 context,
                 '/home',
@@ -67,18 +74,16 @@ class LoginScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text(
-              'Belum Punya Akun ? ',
+              'Sudah Punya Akun ? ',
             ),
             GestureDetector(
               onTap: () {
                 Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(
-                      builder: (context) => SignupScreen(),
-                    ),
+                    MaterialPageRoute(builder: (context) => LoginScreen()),
                     (route) => false);
               },
               child: Text(
-                ' Daftar',
+                ' Masuk',
                 style: Theme.of(context).textTheme.headline5,
               ),
             ),
