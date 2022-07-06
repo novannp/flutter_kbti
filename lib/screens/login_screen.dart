@@ -53,6 +53,11 @@ class LoginScreen extends StatelessWidget {
             width: double.infinity,
             child: ButtonMe(
               title: 'Masuk',
+              function: () => Navigator.pushNamedAndRemoveUntil(
+                context,
+                '/home',
+                (route) => false,
+              ),
             )),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
