@@ -228,9 +228,7 @@ class _HomeScreenState extends State<HomeScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                CircularProgressIndicator(
-                  color: blueColor,
-                ),
+                const CircularProgressIndicator(),
                 const SizedBox(height: 20),
                 Text(
                   'Memuat...',
@@ -333,12 +331,10 @@ class _HomeScreenState extends State<HomeScreen> {
               } else {
                 return Row(
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                       width: 10,
-                      child: CircularProgressIndicator(
-                        color: blueColor,
-                      ),
+                      child: CircularProgressIndicator(),
                     ),
                     const SizedBox(width: 10),
                     Text(

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:kbti_app/screens/login_screen.dart';
 import 'package:kbti_app/screens/themes.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -14,7 +15,10 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     Timer(const Duration(seconds: 2), () {
-      Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
+      // Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+        return LoginScreen();
+      }));
     });
     super.initState();
   }
