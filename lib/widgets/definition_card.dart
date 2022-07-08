@@ -7,7 +7,6 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:kbti_app/models/definition.dart';
-import 'package:kbti_app/screens/themes.dart';
 import 'package:kbti_app/widgets/chip_category.dart';
 
 class DefinitionCard extends StatelessWidget {

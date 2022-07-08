@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:kbti_app/screens/themes.dart';
-import 'package:provider/provider.dart';
 
 class ChipCategory extends StatefulWidget {
   final String label;

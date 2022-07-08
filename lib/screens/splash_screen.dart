@@ -17,7 +17,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer(const Duration(seconds: 2), () {
       // Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
       Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-        return LoginScreen();
+        return const LoginScreen();
       }));
     });
     super.initState();

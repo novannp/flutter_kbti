@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:kbti_app/screens/login_screen.dart';
-import 'package:kbti_app/screens/themes.dart';
-import 'package:kbti_app/widgets/button.dart';
+import 'package:kbti_app/widgets/custom_button.dart';
 import 'package:kbti_app/widgets/form_input.dart';
 
 class SignupScreen extends StatelessWidget {
@@ -57,16 +53,17 @@ class SignupScreen extends StatelessWidget {
           height: 20,
         ),
         Container(
-            margin: const EdgeInsets.symmetric(horizontal: 50),
-            width: double.infinity,
-            child: ButtonMe(
-              title: 'Daftar',
-              function: () => Navigator.pushNamedAndRemoveUntil(
-                context,
-                '/home',
-                (route) => false,
-              ),
-            )),
+          margin: const EdgeInsets.symmetric(horizontal: 50),
+          width: double.infinity,
+          child: CustomButton(
+            title: 'Daftar',
+            onPressed: () => Navigator.pushNamedAndRemoveUntil(
+              context,
+              '/home',
+              (route) => false,
+            ),
+          ),
+        ),
         const SizedBox(
           height: 10,
         ),
@@ -79,7 +76,8 @@ class SignupScreen extends StatelessWidget {
             GestureDetector(
               onTap: () {
                 Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(builder: (context) => LoginScreen()),
+                    MaterialPageRoute(
+                        builder: (context) => const LoginScreen()),
                     (route) => false);
               },
               child: Text(

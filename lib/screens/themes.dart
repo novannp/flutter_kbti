@@ -3,28 +3,26 @@ import 'package:google_fonts/google_fonts.dart';
 
 bool isDarkMode = false;
 Color blueColor = const Color(0xff1d2a57);
-Color blueColorAccent = const Color(0xff1358B4);
 Color greyColor = const Color(0xffdadce0);
 Color bgChipColor = const Color(0xfff2f7ff);
 Color blueDarkColor = const Color(0xFF08133A);
 
 ThemeData darkTheme = ThemeData(
-    elevatedButtonTheme: ElevatedButtonThemeData(
-        style: ElevatedButton.styleFrom(primary: blueColorAccent)),
-    progressIndicatorTheme: ProgressIndicatorThemeData(color: Colors.white),
+    progressIndicatorTheme:
+        const ProgressIndicatorThemeData(color: Colors.white),
     brightness: Brightness.dark,
     appBarTheme: const AppBarTheme(
       backgroundColor: Color(0xff23272a),
     ),
     chipTheme: ChipThemeData(
-      backgroundColor: Color.fromARGB(255, 44, 44, 44),
+      backgroundColor: const Color.fromARGB(255, 44, 44, 44),
       labelStyle: GoogleFonts.lato(
         fontSize: 12,
         color: Colors.white,
         fontWeight: FontWeight.bold,
       ),
     ),
-    listTileTheme: ListTileThemeData(iconColor: Colors.white),
+    listTileTheme: const ListTileThemeData(iconColor: Colors.white),
     dialogTheme: DialogTheme(
         backgroundColor: const Color(0xff23272a),
         titleTextStyle: GoogleFonts.lato(color: Colors.white),
@@ -61,8 +59,8 @@ ThemeData darkTheme = ThemeData(
           color: Colors.white,
         ),
         headline5: GoogleFonts.lato(
-          fontSize: 15,
-          fontWeight: FontWeight.bold,
+          fontSize: 16,
+          color: const Color.fromARGB(255, 255, 255, 255),
         ),
         headline6: GoogleFonts.lato(
           fontSize: 12,
@@ -74,11 +72,11 @@ ThemeData darkTheme = ThemeData(
         )));
 
 ThemeData lightTheme = ThemeData(
-  scaffoldBackgroundColor: bgChipColor,
-  elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(primary: blueColor)),
   progressIndicatorTheme: ProgressIndicatorThemeData(color: blueColor),
   primaryColor: blueColor,
+  buttonTheme: ButtonThemeData(
+    buttonColor: blueColor,
+  ),
   brightness: Brightness.light,
   appBarTheme: AppBarTheme(backgroundColor: blueColor),
   chipTheme: ChipThemeData(
@@ -113,8 +111,8 @@ ThemeData lightTheme = ThemeData(
       color: Colors.black,
     ),
     headline5: GoogleFonts.lato(
-      fontSize: 15,
-      fontWeight: FontWeight.bold,
+      fontSize: 16,
+      color: const Color.fromARGB(255, 184, 184, 184),
     ),
     headline6: GoogleFonts.lato(
       fontSize: 12,

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../screens/themes.dart';
 
 class ThemeProvider with ChangeNotifier {
   String currentTheme = 'system';

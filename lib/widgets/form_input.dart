@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:kbti_app/screens/themes.dart';
 
+// ignore: must_be_immutable
 class FormInput extends StatelessWidget {
-  String? title, hint;
+  String title;
+  String hint;
   TextEditingController? controller;
-  FormInput({this.title, this.hint});
+  FormInput({Key? key, required this.title, required this.hint})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Text(
-        "$title",
+        title,
         style: Theme.of(context).textTheme.headline4,
       ),
       const SizedBox(
@@ -26,12 +27,12 @@ class FormInput extends StatelessWidget {
                 20,
               ),
               borderSide: BorderSide(
-                color: blueColorAccent,
+                color: blueColor,
                 width: 2.0,
               ),
             ),
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
-            hintText: '$hint'),
+            hintText: hint),
       ),
     ]);
   }

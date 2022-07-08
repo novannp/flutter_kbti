@@ -131,7 +131,7 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
           onPressed: () {
             Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(
-                  builder: (context) => LoginScreen(),
+                  builder: (context) => const LoginScreen(),
                 ),
                 (route) => false);
           },

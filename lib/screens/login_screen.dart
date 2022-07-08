@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:kbti_app/screens/signup.screen.dart';
-import 'package:kbti_app/screens/themes.dart';
-import 'package:kbti_app/widgets/button.dart';
+import 'package:kbti_app/screens/sign_up_screen.dart';
+import 'package:kbti_app/widgets/custom_button.dart';
 import 'package:kbti_app/widgets/form_input.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -52,9 +48,9 @@ class LoginScreen extends StatelessWidget {
         Container(
             margin: const EdgeInsets.symmetric(horizontal: 50),
             width: double.infinity,
-            child: ButtonMe(
+            child: CustomButton(
               title: 'Masuk',
-              function: () => Navigator.pushNamedAndRemoveUntil(
+              onPressed: () => Navigator.pushNamedAndRemoveUntil(
                 context,
                 '/home',
                 (route) => false,
@@ -73,7 +69,7 @@ class LoginScreen extends StatelessWidget {
               onTap: () {
                 Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(
-                      builder: (context) => SignupScreen(),
+                      builder: (context) => const SignupScreen(),
                     ),
                     (route) => false);
               },

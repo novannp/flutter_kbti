@@ -5,7 +5,6 @@ import 'package:kbti_app/widgets/navigation_drawer.dart';
 import 'package:kbti_app/widgets/scroll_behaviour.dart';
 
 import '../widgets/custom_app_bar.dart';
-import 'themes.dart';
 
 class AboutScreen extends StatelessWidget {
   const AboutScreen({Key? key}) : super(key: key);
@@ -72,7 +71,6 @@ class AboutScreen extends StatelessWidget {
                       const Divider(),
                       const SizedBox(height: 10),
                       Wrap(
-                        alignment: WrapAlignment.spaceBetween,
                         spacing: 20,
                         runSpacing: 20,
                         children: const [
@@ -85,7 +83,7 @@ class AboutScreen extends StatelessWidget {
                               networkImage: 'https://picsum.photos/300',
                               collage: 'Institut Teknologi Garut'),
                           AvatarDeveloper(
-                              name: 'Tryo Asnafi\n',
+                              name: 'Tryo Asnafi',
                               networkImage: 'https://picsum.photos/400',
                               collage: 'Politeknik Negeri Bengkalis'),
                           AvatarDeveloper(

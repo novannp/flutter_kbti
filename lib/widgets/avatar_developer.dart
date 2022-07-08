@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../screens/themes.dart';
-
 class AvatarDeveloper extends StatelessWidget {
   final String name;
   final String networkImage;
