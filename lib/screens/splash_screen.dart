@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:kbti_app/screens/login_screen.dart';
 import 'package:kbti_app/screens/themes.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -12,13 +13,15 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  Token() async {
+    var prefs = await SharedPreferences.getInstance();
+    return prefs.getString('token');
+  }
+
   @override
   void initState() {
     Timer(const Duration(seconds: 2), () {
-      // Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
-      Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-        return const LoginScreen();
-      }));
+      Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
     });
     super.initState();
   }

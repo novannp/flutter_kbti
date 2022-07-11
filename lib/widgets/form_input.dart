@@ -6,7 +6,8 @@ class FormInput extends StatelessWidget {
   String title;
   String hint;
   TextEditingController? controller;
-  FormInput({Key? key, required this.title, required this.hint})
+  FormInput(
+      {Key? key, required this.title, required this.hint, this.controller})
       : super(key: key);
 
   @override
@@ -19,9 +20,10 @@ class FormInput extends StatelessWidget {
       const SizedBox(
         height: 10,
       ),
-      TextField(
+      TextFormField(
         controller: controller,
         decoration: InputDecoration(
+            filled: true,
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(
                 20,

@@ -6,7 +6,8 @@ import 'package:http/http.dart' as http;
 
 class DropdownProvider extends ChangeNotifier {
   getCategory() async {
-    var url = Uri.parse('$baseUrl/categories');
+    // var url = Uri.parse('$baseUrl/categories');
+    var url = Uri.parse('$baseUrl1/categories');
 
     var result = await http.get(url);
 
