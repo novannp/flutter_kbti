@@ -5,6 +5,7 @@ import 'package:kbti_app/screens/login_screen.dart';
 import 'package:kbti_app/screens/settings_screen.dart';
 import 'package:kbti_app/screens/themes.dart';
 import 'package:kbti_app/widgets/drawer_list_tile.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../screens/about_screen.dart';
 import '../screens/home_screen.dart';
 
@@ -120,6 +121,12 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
     );
   }
 
+  void deleteToken() async {
+    var prefs = await SharedPreferences.getInstance();
+    prefs.remove('token');
+    print('berhasil hapus token');
+  }
+
   Widget popupLogout() {
     return AlertDialog(
       title: Text(
@@ -129,6 +136,7 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
       actions: [
         TextButton(
           onPressed: () {
+            deleteToken();
             Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(
                   builder: (context) => const LoginScreen(),

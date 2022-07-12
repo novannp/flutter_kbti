@@ -6,9 +6,16 @@ class FormInput extends StatelessWidget {
   String title;
   String hint;
   TextEditingController? controller;
-  FormInput(
-      {Key? key, required this.title, required this.hint, this.controller})
-      : super(key: key);
+  bool? obscureText;
+  String? Function(String?)? validator;
+  FormInput({
+    Key? key,
+    required this.title,
+    required this.hint,
+    this.controller,
+    this.obscureText,
+    this.validator,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +29,8 @@ class FormInput extends StatelessWidget {
       ),
       TextFormField(
         controller: controller,
+        obscureText: obscureText ?? false,
+        validator: validator,
         decoration: InputDecoration(
             filled: true,
             focusedBorder: OutlineInputBorder(

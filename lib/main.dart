@@ -34,26 +34,29 @@ class _KBTIAppState extends State<KBTIApp> {
 
     @override
     void initState() {
+      // Token() async {
+      //   var prefs = await SharedPreferences.getInstance();
+      //   var token = prefs.getString('token');
+      //   if (token != '') {
+      //     isLogin = true;
+      //     print(token);
+      //   }
+      //   print(token);
+      // }
+
       super.initState();
-      Token() async {
-        var prefs = await SharedPreferences.getInstance();
-        var token = prefs.getString('token');
-        if (token != '') {
-          isLogin = true;
-        }
-      }
     }
 
     return Consumer(
       builder: (context, value, child) {
         final themeProvider = Provider.of<ThemeProvider>(context);
         return MaterialApp(
-          darkTheme: darkTheme,
+          darkTheme: lightTheme,
           theme: lightTheme,
           themeMode: themeProvider.themeMode,
           debugShowCheckedModeBanner: false,
           title: 'KBTI',
-          initialRoute: isLogin != true ? '/' : '/home',
+          initialRoute: '/',
           routes: {
             '/': (context) => const SplashScreen(),
             '/home': (context) => const HomeScreen(),

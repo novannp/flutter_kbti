@@ -28,7 +28,7 @@ class DefinitionProvider extends ChangeNotifier {
 
   getDefinitionsByCategories(id) async {
     // var url = Uri.parse('$baseUrl/definitions?categoryId=$id');
-    var url = Uri.parse('$baseUrl1/definitions?categoryId=$id');
+    var url = Uri.parse('$baseUrl/definitions?categoryId=$id');
     var result = await http.get(url);
 
     if (result.statusCode == 200) {

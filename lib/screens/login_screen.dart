@@ -16,6 +16,7 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final emailCtrl = TextEditingController();
     final passCtrl = TextEditingController();
+    final _formKey = GlobalKey<FormState>();
 
     return Scaffold(
         body: Container(
@@ -38,19 +39,37 @@ class LoginScreen extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            FormInput(
-              controller: emailCtrl,
-              title: 'Email',
-              hint: 'Email Anda',
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            FormInput(
-              controller: passCtrl,
-              title: 'Password',
-              hint: 'Password Anda',
-            ),
+            Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    FormInput(
+                        controller: emailCtrl,
+                        title: 'Email',
+                        hint: 'Email Anda',
+                        validator: (String? email) {
+                          if (email!.isEmpty) {
+                            return "Isi Email";
+                          }
+                          return null;
+                        }),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    FormInput(
+                      controller: passCtrl,
+                      obscureText: true,
+                      title: 'Password',
+                      hint: 'Password Anda',
+                      validator: (String? pass) {
+                        if (pass!.isEmpty) {
+                          return "Isi Password";
+                        }
+                        return null;
+                      },
+                    ),
+                  ],
+                ))
           ],
         ),
         const SizedBox(
@@ -61,11 +80,11 @@ class LoginScreen extends StatelessWidget {
             width: double.infinity,
             child: CustomButton(
                 title: 'Masuk',
-                onPressed: () => Login(
-                      context,
-                      emailCtrl.text,
-                      passCtrl.text,
-                    ))),
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    Login(context, emailCtrl.text, passCtrl.text);
+                  } else {}
+                })),
         const SizedBox(
           height: 10,
         ),
@@ -111,17 +130,40 @@ class LoginScreen extends StatelessWidget {
           (jsonDecode(response.body)['data']['access_token']['token']));
       print(jsonDecode(response.body)['data']['access_token']['token']);
       showDialog(
-          context: context,
-          builder: (context) => const AlertDialog(
-                title: Text('Berhasil Login'),
-                actions: [
-                  LinearProgressIndicator(),
-                ],
-              ));
+        context: context,
+        builder: (context) => Container(
+          margin: const EdgeInsets.symmetric(
+            horizontal: 100,
+          ),
+          child: const Center(
+            child: LinearProgressIndicator(),
+          ),
+        ),
+      );
       Future.delayed(const Duration(seconds: 2), () {
         Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
       });
     } else {
+      showDialog(
+        context: context,
+        builder: (context) => Container(
+          margin: const EdgeInsets.symmetric(
+            horizontal: 100,
+          ),
+          child: const Center(
+            child: LinearProgressIndicator(),
+          ),
+        ),
+      );
+      Future.delayed(const Duration(seconds: 2), () {
+        Navigator.pop(context);
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            duration: Duration(seconds: 2),
+            content: Text(
+              'Username dan Password Salah',
+              textAlign: TextAlign.center,
+            )));
+      });
       print(response.body);
       print('gagal masuk');
     }

@@ -13,17 +13,28 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  Token() async {
+  var isLogin = false;
+  Future Token() async {
     var prefs = await SharedPreferences.getInstance();
-    return prefs.getString('token');
+    String? token = prefs.getString('token');
+    if (token != null) {
+      print(token);
+      isLogin = true;
+    }
+    print(token);
   }
 
   @override
   void initState() {
-    Timer(const Duration(seconds: 2), () {
-      Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
-    });
+    Token();
     super.initState();
+    Timer(const Duration(seconds: 2), () {
+      !isLogin
+          ? Navigator.pushNamedAndRemoveUntil(
+              context, '/login', (route) => false)
+          : Navigator.pushNamedAndRemoveUntil(
+              context, '/home', (route) => false);
+    });
   }
 
   @override
