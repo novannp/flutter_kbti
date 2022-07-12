@@ -21,7 +21,6 @@ class _SplashScreenState extends State<SplashScreen> {
       print(token);
       isLogin = true;
     }
-    print(token);
   }
 
   @override

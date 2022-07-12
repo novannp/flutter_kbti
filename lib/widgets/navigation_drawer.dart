@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:kbti_app/providers/user_provider.dart';
 import 'package:kbti_app/screens/dashboard_screen.dart';
 import 'package:kbti_app/screens/login_screen.dart';
 import 'package:kbti_app/screens/settings_screen.dart';
 import 'package:kbti_app/screens/themes.dart';
 import 'package:kbti_app/widgets/drawer_list_tile.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../screens/about_screen.dart';
 import '../screens/home_screen.dart';
@@ -19,6 +21,8 @@ class NavigationDrawer extends StatefulWidget {
 class _NavigationDrawerState extends State<NavigationDrawer> {
   @override
   Widget build(BuildContext context) {
+    var userProvider = Provider.of<UserProvider>(context);
+
     return Container(
       color: Theme.of(context).canvasColor,
       height: double.infinity,
@@ -28,38 +32,53 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              DrawerHeader(
-                decoration: BoxDecoration(
-                  color: blueDarkColor,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(
-                      height: 60,
-                      width: 60,
-                      child: CircleAvatar(
-                        backgroundImage:
-                            NetworkImage('https://picsum.photos/200'),
+              FutureBuilder(
+                future: userProvider.getProfileUser(),
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  print(">>>>> ${snapshot.data}");
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return DrawerHeader(
+                      decoration: BoxDecoration(
+                        color: blueDarkColor,
                       ),
-                    ),
-                    const SizedBox(height: 20),
-                    Text(
-                      'Novan Noviansyah Pratama',
-                      style: GoogleFonts.lato(
-                        fontSize: 20,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
+                      child: Container(),
+                    );
+                  } else {
+                    return DrawerHeader(
+                      decoration: BoxDecoration(
+                        color: blueDarkColor,
                       ),
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    Text(
-                      'novangarut@gmail.com',
-                      style: GoogleFonts.lato(color: Colors.grey[400]),
-                      overflow: TextOverflow.ellipsis,
-                    )
-                  ],
-                ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(
+                            height: 60,
+                            width: 60,
+                            child: CircleAvatar(
+                              backgroundImage:
+                                  NetworkImage('https://picsum.photos/200'),
+                            ),
+                          ),
+                          const SizedBox(height: 20),
+                          Text(
+                            snapshot.data['username'] ?? 'Unknown',
+                            style: GoogleFonts.lato(
+                              fontSize: 20,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          Text(
+                            snapshot.data['email'] ?? 'Unknown',
+                            style: GoogleFonts.lato(color: Colors.grey[400]),
+                            overflow: TextOverflow.ellipsis,
+                          )
+                        ],
+                      ),
+                    );
+                  }
+                },
               ),
               DrawerListTile(
                 title: 'Dashboard',
@@ -139,7 +158,7 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
             deleteToken();
             Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(
-                  builder: (context) => const LoginScreen(),
+                  builder: (context) => LoginScreen(),
                 ),
                 (route) => false);
           },

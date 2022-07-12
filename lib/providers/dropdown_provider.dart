@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:kbti_app/configs/apiEndPoints.dart';
 import '../configs/config.dart';
 import '../models/category.dart';
 import 'package:http/http.dart' as http;
@@ -7,7 +8,7 @@ import 'package:http/http.dart' as http;
 class DropdownProvider extends ChangeNotifier {
   getCategory() async {
     // var url = Uri.parse('$baseUrl/categories');
-    var url = Uri.parse('$baseUrl/categories');
+    var url = Uri.parse(apiEndPoint['CATEGORY']);
 
     var result = await http.get(url);
 

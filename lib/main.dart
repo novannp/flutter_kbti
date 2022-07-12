@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:kbti_app/providers/definition_provider.dart';
 import 'package:kbti_app/providers/dropdown_provider.dart';
+import 'package:kbti_app/providers/login_provider.dart';
+import 'package:kbti_app/providers/signup_provider.dart';
+import 'package:kbti_app/providers/user_provider.dart';
 import 'package:kbti_app/screens/login_screen.dart';
 import 'package:kbti_app/screens/sign_up_screen.dart';
 import 'package:kbti_app/screens/splash_screen.dart';
@@ -15,6 +18,9 @@ void main() {
     ChangeNotifierProvider(create: (_) => DefinitionProvider()),
     ChangeNotifierProvider(create: (_) => DropdownProvider()),
     ChangeNotifierProvider(create: (_) => ThemeProvider()),
+    ChangeNotifierProvider(create: (_) => LoginProvider()),
+    ChangeNotifierProvider(create: (_) => SignupProvider()),
+    ChangeNotifierProvider(create: (_) => UserProvider()),
   ], child: const KBTIApp()));
 }
 
@@ -30,28 +36,11 @@ class _KBTIAppState extends State<KBTIApp> {
 
   @override
   Widget build(BuildContext context) {
-    var isLogin = false;
-
-    @override
-    void initState() {
-      // Token() async {
-      //   var prefs = await SharedPreferences.getInstance();
-      //   var token = prefs.getString('token');
-      //   if (token != '') {
-      //     isLogin = true;
-      //     print(token);
-      //   }
-      //   print(token);
-      // }
-
-      super.initState();
-    }
-
     return Consumer(
       builder: (context, value, child) {
         final themeProvider = Provider.of<ThemeProvider>(context);
         return MaterialApp(
-          darkTheme: lightTheme,
+          darkTheme: darkTheme,
           theme: lightTheme,
           themeMode: themeProvider.themeMode,
           debugShowCheckedModeBanner: false,
@@ -60,8 +49,8 @@ class _KBTIAppState extends State<KBTIApp> {
           routes: {
             '/': (context) => const SplashScreen(),
             '/home': (context) => const HomeScreen(),
-            '/signup': (context) => const SignupScreen(),
-            '/login': (context) => const LoginScreen()
+            '/signup': (context) => SignupScreen(),
+            '/login': (context) => LoginScreen()
           },
         );
       },
