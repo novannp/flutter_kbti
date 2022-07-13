@@ -35,7 +35,6 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
               FutureBuilder(
                 future: userProvider.getProfileUser(),
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  print(">>>>> ${snapshot.data}");
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return DrawerHeader(
                       decoration: BoxDecoration(
@@ -122,7 +121,8 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                 icon: const Icon(Icons.logout_rounded),
                 onTap: () {
                   showDialog(
-                      context: context, builder: (context) => popupLogout());
+                      context: context,
+                      builder: (context) => popupLogout(userProvider));
                 },
               ),
               const Spacer(),
@@ -140,13 +140,7 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
     );
   }
 
-  void deleteToken() async {
-    var prefs = await SharedPreferences.getInstance();
-    prefs.remove('token');
-    print('berhasil hapus token');
-  }
-
-  Widget popupLogout() {
+  Widget popupLogout(UserProvider userProvider) {
     return AlertDialog(
       title: Text(
         'Anda yakin ingin Logout ?',
@@ -155,12 +149,7 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
       actions: [
         TextButton(
           onPressed: () {
-            deleteToken();
-            Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(
-                  builder: (context) => LoginScreen(),
-                ),
-                (route) => false);
+            userProvider.logout(context);
           },
           child: Text(
             'Ya',

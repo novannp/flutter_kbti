@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:kbti_app/providers/definition_provider.dart';
 import 'package:kbti_app/providers/dropdown_provider.dart';
-import 'package:kbti_app/providers/login_provider.dart';
-import 'package:kbti_app/providers/signup_provider.dart';
 import 'package:kbti_app/providers/user_provider.dart';
 import 'package:kbti_app/screens/login_screen.dart';
 import 'package:kbti_app/screens/sign_up_screen.dart';
 import 'package:kbti_app/screens/splash_screen.dart';
 import 'package:kbti_app/screens/themes.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'providers/theme_provider.dart';
 import 'screens/home_screen.dart';
 
@@ -18,8 +15,6 @@ void main() {
     ChangeNotifierProvider(create: (_) => DefinitionProvider()),
     ChangeNotifierProvider(create: (_) => DropdownProvider()),
     ChangeNotifierProvider(create: (_) => ThemeProvider()),
-    ChangeNotifierProvider(create: (_) => LoginProvider()),
-    ChangeNotifierProvider(create: (_) => SignupProvider()),
     ChangeNotifierProvider(create: (_) => UserProvider()),
   ], child: const KBTIApp()));
 }

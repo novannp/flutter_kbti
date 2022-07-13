@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kbti_app/providers/login_provider.dart';
+import 'package:kbti_app/providers/user_provider.dart';
 import 'package:kbti_app/screens/sign_up_screen.dart';
 import 'package:kbti_app/widgets/custom_button.dart';
 import 'package:kbti_app/widgets/form_input.dart';
@@ -13,7 +13,7 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var loginProvider = Provider.of<LoginProvider>(context, listen: false);
+    var loginProvider = Provider.of<UserProvider>(context, listen: false);
     return Scaffold(
         body: Container(
             margin: const EdgeInsets.symmetric(horizontal: 70),
@@ -70,7 +70,7 @@ class LoginScreen extends StatelessWidget {
                     onTap: () {
                       Navigator.of(context).pushAndRemoveUntil(
                           MaterialPageRoute(
-                            builder: (context) =>SignupScreen(),
+                            builder: (context) => SignupScreen(),
                           ),
                           (route) => false);
                     },

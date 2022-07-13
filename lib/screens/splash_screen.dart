@@ -1,9 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:kbti_app/screens/login_screen.dart';
 import 'package:kbti_app/screens/themes.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:kbti_app/services/storage.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -14,19 +13,18 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   var isLogin = false;
-  Future Token() async {
-    var prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString('token');
+  SecureStorage storage = SecureStorage();
+
+  token() async {
+    String? token = await storage.read('token');
     if (token != null) {
-      print(token);
       isLogin = true;
     }
   }
 
   @override
   void initState() {
-    Token();
-    super.initState();
+    token();
     Timer(const Duration(seconds: 2), () {
       !isLogin
           ? Navigator.pushNamedAndRemoveUntil(
@@ -34,6 +32,7 @@ class _SplashScreenState extends State<SplashScreen> {
           : Navigator.pushNamedAndRemoveUntil(
               context, '/home', (route) => false);
     });
+    super.initState();
   }
 
   @override
