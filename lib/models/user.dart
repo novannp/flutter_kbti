@@ -6,7 +6,7 @@ class User {
   late int totalApproved;
   late int totalReview;
   late int totalReject;
-  late List<Map> definitions;
+  late List definitions;
 
   User({
     required this.username,
@@ -24,7 +24,9 @@ class User {
       totalApproved: json['total_approved'],
       totalReview: json['total_review'],
       totalReject: json['total_reject'],
-      definitions: json['definitions'],
+      definitions: json['definitions']
+          .map((e) => Definition.fromJsonForUser(e))
+          .toList(),
     );
   }
 }

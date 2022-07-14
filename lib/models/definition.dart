@@ -1,24 +1,26 @@
 class Definition {
-  int id;
+  int? id;
   String category;
   int createdAt;
   int updatedAt;
   String term;
   String definition;
-  String username;
+  String? username;
   int upVotes;
   int downVotes;
+  String? statusDefinition;
 
   Definition(
-      {required this.id,
+      {this.id,
       required this.category,
       required this.createdAt,
       required this.updatedAt,
       required this.term,
       required this.definition,
-      required this.username,
+      this.username,
       required this.upVotes,
-      required this.downVotes});
+      required this.downVotes,
+      this.statusDefinition});
 
   factory Definition.fromJson(Map<String, dynamic> json) {
     return Definition(
@@ -31,5 +33,19 @@ class Definition {
         username: json['username'],
         upVotes: json['up_votes'],
         downVotes: json['down_votes']);
+  }
+
+  factory Definition.fromJsonForUser(Map<String, dynamic> json) {
+    return Definition(
+      id: json['id'],
+      term: json['term'],
+      definition: json['definition'],
+      category: json['category'],
+      statusDefinition: json['statusDefinition'],
+      upVotes: json['up_votes'],
+      downVotes: json['down_votes'],
+      createdAt: json['createdAt'],
+      updatedAt: json['updatedAt'],
+    );
   }
 }

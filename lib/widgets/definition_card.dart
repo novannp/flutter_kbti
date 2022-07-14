@@ -81,7 +81,7 @@ class DefinitionCard extends StatelessWidget {
                 // ignore: prefer_const_literals_to_create_immutables
                 children: [
                   Text(
-                    definition.username,
+                    definition.username.toString(),
                     style: GoogleFonts.lato(
                       fontStyle: FontStyle.italic,
                     ),
@@ -118,9 +118,18 @@ class DefinitionCard extends StatelessWidget {
                             );
                           });
                     },
-                    child: ChipCategory(
-                        label:
-                            'Nilai votes : ${((definition.upVotes) - (definition.downVotes)).toString()}'),
+                    child: Row(
+                      children: [
+                        ChipCategory(
+                            label:
+                                'Nilai votes : ${((definition.upVotes) - (definition.downVotes)).toString()}'),
+                        SizedBox(width: 10),
+                        definition.statusDefinition != null
+                            ? ChipCategory(
+                                label: definition.statusDefinition.toString())
+                            : Container()
+                      ],
+                    ),
                   ),
                   IconButton(
                       splashRadius: 20,
