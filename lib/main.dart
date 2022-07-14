@@ -8,6 +8,7 @@ import 'package:kbti_app/screens/splash_screen.dart';
 import 'package:kbti_app/screens/themes.dart';
 import 'package:provider/provider.dart';
 import 'providers/theme_provider.dart';
+import 'screens/dashboard_screen.dart';
 import 'screens/home_screen.dart';
 
 void main() {
@@ -44,6 +45,7 @@ class _KBTIAppState extends State<KBTIApp> {
           routes: {
             '/': (context) => const SplashScreen(),
             '/home': (context) => const HomeScreen(),
+            '/dashboard': (context) => DashboardScreen(),
             '/signup': (context) => SignupScreen(),
             '/login': (context) => LoginScreen()
           },

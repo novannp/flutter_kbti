@@ -5,6 +5,8 @@ import 'package:kbti_app/configs/apiEndPoints.dart';
 import 'package:http/http.dart' as http;
 import 'package:kbti_app/services/storage.dart';
 
+import '../models/user.dart';
+
 class UserProvider extends ChangeNotifier {
   var storage = SecureStorage();
 
@@ -14,9 +16,11 @@ class UserProvider extends ChangeNotifier {
 
     var response =
         await http.get(url, headers: {"Authorization": "Bearer $token"});
+    var result = jsonDecode(response.body)['data'];
     if (response.statusCode == 200) {
-      return jsonDecode(response.body)['data'];
+      return result;
     }
+    notifyListeners();
   }
 
   signUp(context, username, email, password) async {
@@ -45,11 +49,15 @@ class UserProvider extends ChangeNotifier {
     Uri url = Uri.parse(apiEndPoint['LOGIN']);
     Map data = {"email": email, "password": password};
 
-    var response = await http.post(url, body: jsonEncode(data), headers: {
-      'Content-Type': 'application/json; charset=UTF-8',
-    });
+    var response = await http.post(
+      url,
+      body: jsonEncode(data),
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
     var result = jsonDecode(response.body);
-
+    print(response.statusCode);
     if (response.statusCode == 200) {
       var token = result['data']['access_token']['token'];
       var tokenStorage = storage.write('token', token);
@@ -58,6 +66,7 @@ class UserProvider extends ChangeNotifier {
       Future.delayed(const Duration(seconds: 2), () {
         Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
       });
+      return token;
     } else {
       showDialog(context: context, builder: (context) => loading());
       Future.delayed(const Duration(seconds: 2), () {
@@ -69,7 +78,6 @@ class UserProvider extends ChangeNotifier {
               textAlign: TextAlign.center,
             )));
       });
-      print(response.body);
     }
   }
 

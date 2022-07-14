@@ -84,7 +84,7 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                 icon: const Icon(Icons.dashboard_rounded),
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return const DashboardScreen();
+                    return DashboardScreen();
                   }));
                 },
               ),
