@@ -50,11 +50,12 @@ class DefinitionCard extends StatelessWidget {
               const SizedBox(height: 10),
               Row(
                 children: [
-                  Text(
-                    definition.term,
-                    style: Theme.of(context).textTheme.headline1,
+                  Expanded(
+                    child: Text(
+                      definition.term,
+                      style: Theme.of(context).textTheme.headline1,
+                    ),
                   ),
-                  Spacer(),
                   GestureDetector(
                     onTap: () {
                       showDialog(

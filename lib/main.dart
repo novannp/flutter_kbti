@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:kbti_app/providers/definition_provider.dart';
 import 'package:kbti_app/providers/dropdown_provider.dart';
+import 'package:kbti_app/providers/user_provider.dart';
+import 'package:kbti_app/screens/login_screen.dart';
+import 'package:kbti_app/screens/sign_up_screen.dart';
 import 'package:kbti_app/screens/splash_screen.dart';
 import 'package:kbti_app/screens/themes.dart';
 import 'package:provider/provider.dart';
@@ -12,6 +15,7 @@ void main() {
     ChangeNotifierProvider(create: (_) => DefinitionProvider()),
     ChangeNotifierProvider(create: (_) => DropdownProvider()),
     ChangeNotifierProvider(create: (_) => ThemeProvider()),
+    ChangeNotifierProvider(create: (_) => UserProvider()),
   ], child: const KBTIApp()));
 }
 
@@ -39,7 +43,9 @@ class _KBTIAppState extends State<KBTIApp> {
           initialRoute: '/',
           routes: {
             '/': (context) => const SplashScreen(),
-            '/home': (context) => const HomeScreen()
+            '/home': (context) => const HomeScreen(),
+            '/signup': (context) => SignupScreen(),
+            '/login': (context) => LoginScreen()
           },
         );
       },
