@@ -80,12 +80,14 @@ class DefinitionCard extends StatelessWidget {
               Row(
                 // ignore: prefer_const_literals_to_create_immutables
                 children: [
-                  Text(
-                    definition.username.toString(),
-                    style: GoogleFonts.lato(
-                      fontStyle: FontStyle.italic,
-                    ),
-                  ),
+                  definition.username != null
+                      ? Text(
+                          definition.username.toString(),
+                          style: GoogleFonts.lato(
+                            fontStyle: FontStyle.italic,
+                          ),
+                        )
+                      : Container(),
                   Text(
                     ' • $formattedDate',
                     style: GoogleFonts.lato(
@@ -125,8 +127,17 @@ class DefinitionCard extends StatelessWidget {
                                 'Nilai votes : ${((definition.upVotes) - (definition.downVotes)).toString()}'),
                         SizedBox(width: 10),
                         definition.statusDefinition != null
-                            ? ChipCategory(
-                                label: definition.statusDefinition.toString())
+                            ? Text(
+                                definition.statusDefinition.toString(),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline6
+                                    ?.copyWith(
+                                        color:
+                                            definition.statusDefinition != null
+                                                ? Colors.green
+                                                : Colors.red),
+                              )
                             : Container()
                       ],
                     ),

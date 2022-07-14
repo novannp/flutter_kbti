@@ -22,30 +22,36 @@ class DashboardScreen extends StatelessWidget {
         future: userProvider.getProfileUser(),
         builder: (context, snapshot) {
           Map<String, dynamic> result = snapshot.data as Map<String, dynamic>;
-          var user = User.fromJson(result);
+
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
               child: CircularProgressIndicator(),
             );
+          } else if (snapshot.connectionState == ConnectionState.done) {
+            var user = User.fromJson(result);
+            return Padding(
+              padding: const EdgeInsets.only(left: 14, right: 14, top: 10),
+              child: ListView(
+                children: [
+                  buildDashboardCard(context, user),
+                  CustomButton(
+                    onPressed: () {},
+                    title: '+ Tambahkan istilah baru',
+                  ),
+                  const SizedBox(height: 10),
+                  Column(
+                      children: user.definitions
+                          .map((definition) =>
+                              DefinitionCard(definition: definition))
+                          .toList()),
+                ],
+              ),
+            );
+          } else {
+            return const Center(
+              child: Text('Error'),
+            );
           }
-          return Padding(
-            padding: const EdgeInsets.only(left: 14, right: 14, top: 10),
-            child: ListView(
-              children: [
-                buildDashboardCard(context, user),
-                CustomButton(
-                  onPressed: () {},
-                  title: '+ Tambahkan istilah baru',
-                ),
-                const SizedBox(height: 10),
-                Column(
-                    children: user.definitions
-                        .map((definition) =>
-                            DefinitionCard(definition: definition))
-                        .toList()),
-              ],
-            ),
-          );
         },
       ),
     );
