@@ -6,13 +6,13 @@ import 'package:kbti_app/widgets/custom_app_bar.dart';
 import 'package:kbti_app/widgets/definition_card.dart';
 import 'package:kbti_app/widgets/form_input.dart';
 import 'package:kbti_app/widgets/navigation_drawer.dart';
+import 'package:kbti_app/extensions/capitalize_first_letter.dart';
 import 'package:provider/provider.dart';
 
 import '../models/user.dart';
-import 'themes.dart';
 
 class DashboardScreen extends StatefulWidget {
-  DashboardScreen({Key? key}) : super(key: key);
+  const DashboardScreen({Key? key}) : super(key: key);
 
   @override
   State<DashboardScreen> createState() => _DashboardScreenState();
@@ -31,13 +31,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
       body: FutureBuilder(
         future: userProvider.getProfileUser(),
         builder: (context, snapshot) {
-          Map<String, dynamic> result = snapshot.data as Map<String, dynamic>;
-
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
               child: CircularProgressIndicator(),
             );
           } else if (snapshot.connectionState == ConnectionState.done) {
+            Map<String, dynamic> result = snapshot.data as Map<String, dynamic>;
             var user = User.fromJson(result);
             return Padding(
               padding: const EdgeInsets.only(left: 14, right: 14, top: 10),
@@ -155,24 +154,28 @@ class _DashboardScreenState extends State<DashboardScreen> {
             return const Center(
               child: CircularProgressIndicator(),
             );
-          } else
-            return Text('Gagal Mendapatkan kategori yang tersedia');
+          } else {
+            return const Text('Gagal Mendapatkan kategori yang tersedia');
+          }
         });
   }
 
   Widget buildDashboardCard(BuildContext context, User user) {
+    // ThemeProvider theme = ThemeProvider();
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  'Halo, ${user.username}',
-                  style: Theme.of(context).textTheme.headline1,
+                Expanded(
+                  child: Text(
+                    'Halo, ${user.username.toString().capitalize()} ',
+                    style: Theme.of(context).textTheme.headline1,
+                  ),
                 ),
                 IconButton(
                     onPressed: () {
@@ -191,18 +194,19 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     icon: const Icon(Icons.info_rounded))
               ],
             ),
-            Text(
-              'Status definisi yang kamu buat',
-              style: Theme.of(context).textTheme.headline5,
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: 10.0,
+              ),
+              child: Text(
+                'Status definisi yang kamu buat',
+                style: Theme.of(context).textTheme.headline5,
+              ),
             ),
             Container(
                 margin: const EdgeInsets.symmetric(vertical: 10),
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  // ignore: unrelated_type_equality_checks
-                  color: ThemeMode == ThemeMode.light
-                      ? bgChipColor
-                      : Color.fromARGB(255, 32, 32, 32),
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: Row(

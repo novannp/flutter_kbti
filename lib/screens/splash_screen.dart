@@ -42,7 +42,10 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     var theme = Provider.of<ThemeProvider>(context);
     return Scaffold(
-      backgroundColor: theme.currentTheme == 'light' ? blueColor : null,
+      backgroundColor:
+          theme.currentTheme == 'light' || theme.currentTheme == 'system'
+              ? blueColor
+              : null,
       body: Center(
         child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
