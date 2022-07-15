@@ -40,7 +40,7 @@ class DashboardScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   Column(
-                      children: user.definitions
+                      children: user.definitions!
                           .map((definition) =>
                               DefinitionCard(definition: definition))
                           .toList()),

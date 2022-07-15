@@ -1,12 +1,12 @@
 import 'package:kbti_app/models/definition.dart';
 
 class User {
-  late String username;
-  late String email;
-  late int totalApproved;
-  late int totalReview;
-  late int totalReject;
-  late List definitions;
+  late String? username;
+  late String? email;
+  late int? totalApproved;
+  late int? totalReview;
+  late int? totalReject;
+  late List? definitions;
 
   User({
     required this.username,

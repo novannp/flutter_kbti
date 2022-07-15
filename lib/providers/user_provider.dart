@@ -10,7 +10,7 @@ import '../models/user.dart';
 class UserProvider extends ChangeNotifier {
   var storage = SecureStorage();
 
-  Future getProfileUser() async {
+  Future<Map<String, dynamic>?> getProfileUser() async {
     var token = await storage.read('token');
     Uri url = Uri.parse(apiEndPoint['DASHBOARD']);
 
@@ -18,9 +18,10 @@ class UserProvider extends ChangeNotifier {
         await http.get(url, headers: {"Authorization": "Bearer $token"});
     var result = jsonDecode(response.body)['data'];
     if (response.statusCode == 200) {
-      return result;
+      return result as Map<String, dynamic>;
+    } else {
+      return null;
     }
-    notifyListeners();
   }
 
   signUp(context, username, email, password) async {

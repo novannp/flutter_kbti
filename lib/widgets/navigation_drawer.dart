@@ -23,7 +23,14 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
   @override
   Widget build(BuildContext context) {
     var userProvider = Provider.of<UserProvider>(context);
-
+    Map<String, dynamic> initialData = {
+      'username': '',
+      'email': 'belum masuk',
+      'totalApproved': 0,
+      'totalReview': 0,
+      'totalReject': 0,
+      'definitions': []
+    };
     return Container(
       color: Theme.of(context).canvasColor,
       height: double.infinity,
@@ -33,21 +40,44 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              FutureBuilder(
+              FutureBuilder<Map<String, dynamic>?>(
+                initialData: initialData,
                 future: userProvider.getProfileUser(),
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  var user = User.fromJson(snapshot.data);
+                  var result = snapshot.data as Map<String, dynamic>;
+                  var user = User.fromJson(result);
+                  if (snapshot.hasError) {
+                    return DrawerHeader(
+                        decoration: BoxDecoration(
+                          color: blueDarkColor,
+                        ),
+                        child: Center(child: Text('Koneksi Error')));
+                  }
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return DrawerHeader(
                       decoration: BoxDecoration(
                         color: blueDarkColor,
                       ),
-                      child: Center(
-                        child: SizedBox(
-                            height: 10, child: LinearProgressIndicator()),
+                      child: const Center(
+                        child: Text(
+                          'Loading...',
+                          style: TextStyle(color: Colors.white),
+                        ),
                       ),
                     );
-                  } else {
+                  } else if (snapshot.connectionState == ConnectionState.none) {
+                    return DrawerHeader(
+                      decoration: BoxDecoration(
+                        color: blueDarkColor,
+                      ),
+                      child: const Center(
+                        child: Text(
+                          'Tidak ada koneksi',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    );
+                  } else if (snapshot.connectionState == ConnectionState.done) {
                     return DrawerHeader(
                       decoration: BoxDecoration(
                         color: blueDarkColor,
@@ -80,6 +110,11 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                           )
                         ],
                       ),
+                    );
+                  } else {
+                    return DrawerHeader(
+                      decoration: BoxDecoration(color: blueDarkColor),
+                      child: null,
                     );
                   }
                 },
