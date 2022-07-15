@@ -10,6 +10,23 @@ import '../models/user.dart';
 class UserProvider extends ChangeNotifier {
   var storage = SecureStorage();
 
+  addDefinition(String term, String definition, int categoryId) async {
+    var url = Uri.parse(apiEndPoint['ADD_DEFINITION']);
+    var response = await http.post(
+      url,
+      body: {
+        'term': term,
+        'definition': definition,
+        'categoryId': categoryId,
+      },
+      headers: {'Content-Type': 'application/json; charset=UTF-8'},
+    );
+
+    if (response.statusCode == 201) {
+      loading();
+    }
+  }
+
   Future<Map<String, dynamic>?> getProfileUser() async {
     var token = await storage.read('token');
     Uri url = Uri.parse(apiEndPoint['DASHBOARD']);

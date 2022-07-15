@@ -11,4 +11,5 @@ Map apiEndPoint = {
   "GET_DEFINITIONS_BY_CATEGORY": '$baseUrl/definitions?categoryId=',
   "GET_DEFINITION_BY_TERM": '$baseUrl/definitions?term=',
   "SEARCH_DEFINITION": '$baseUrl/search?q=',
+  "ADD_DEFINITION": '$baseUrl/definitions',
 };
