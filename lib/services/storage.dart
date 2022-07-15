@@ -18,7 +18,7 @@ class SecureStorage {
   }
 
   Future delete(key) async {
-    var delete =
+    var delete = 
         await _storage.delete(key: key, aOptions: _getAndroidOptions());
     return delete;
   }

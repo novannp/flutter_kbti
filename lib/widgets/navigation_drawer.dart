@@ -35,7 +35,8 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
               FutureBuilder(
                 future: userProvider.getProfileUser(),
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
+                  print(snapshot.data);
+                  if (!snapshot.hasData) {
                     return DrawerHeader(
                       decoration: BoxDecoration(
                         color: blueDarkColor,

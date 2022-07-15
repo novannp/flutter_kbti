@@ -21,13 +21,13 @@ class DashboardScreen extends StatelessWidget {
       body: FutureBuilder(
         future: userProvider.getProfileUser(),
         builder: (context, snapshot) {
-          Map<String, dynamic> result = snapshot.data as Map<String, dynamic>;
-          var user = User.fromJson(result);
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
               child: CircularProgressIndicator(),
             );
           }
+          Map<String, dynamic> result = snapshot.data as Map<String, dynamic>;
+          var user = User.fromJson(result);
           return Padding(
             padding: const EdgeInsets.only(left: 14, right: 14, top: 10),
             child: ListView(

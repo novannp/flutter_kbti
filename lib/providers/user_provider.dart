@@ -20,7 +20,6 @@ class UserProvider extends ChangeNotifier {
     if (response.statusCode == 200) {
       return result;
     }
-    notifyListeners();
   }
 
   signUp(context, username, email, password) async {
@@ -60,12 +59,13 @@ class UserProvider extends ChangeNotifier {
     print(response.statusCode);
     if (response.statusCode == 200) {
       var token = result['data']['access_token']['token'];
-      var tokenStorage = storage.write('token', token);
+      storage.write('token', token);
 
       showDialog(context: context, builder: (context) => loading());
       Future.delayed(const Duration(seconds: 2), () {
         Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
       });
+      print(token);
       return token;
     } else {
       showDialog(context: context, builder: (context) => loading());
