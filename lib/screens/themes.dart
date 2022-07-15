@@ -14,6 +14,16 @@ ThemeData darkTheme = ThemeData(
     appBarTheme: const AppBarTheme(
       backgroundColor: Color(0xff23272a),
     ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        primary: Colors.white,
+        onPrimary: Colors.black,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30),
+        ),
+        textStyle: const TextTheme().headline5,
+      ),
+    ),
     chipTheme: ChipThemeData(
       backgroundColor: const Color.fromARGB(255, 44, 44, 44),
       labelStyle: GoogleFonts.lato(
@@ -76,6 +86,16 @@ ThemeData lightTheme = ThemeData(
   primaryColor: blueColor,
   buttonTheme: ButtonThemeData(
     buttonColor: blueColor,
+  ),
+  elevatedButtonTheme: ElevatedButtonThemeData(
+    style: ElevatedButton.styleFrom(
+      primary: blueColor,
+      onPrimary: Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(30),
+      ),
+      textStyle: const TextTheme().headline5,
+    ),
   ),
   brightness: Brightness.light,
   appBarTheme: AppBarTheme(backgroundColor: blueColor),

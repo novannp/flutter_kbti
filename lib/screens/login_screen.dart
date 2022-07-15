@@ -68,13 +68,16 @@ class _LoginScreenState extends State<LoginScreen> {
                   ]))
             ]),
             const SizedBox(height: 20),
-            CustomButton(
-              title: 'Masuk',
-              onPressed: () {
-                if (_formKey.currentState!.validate()) {
-                  loginProvider.login(context, emailCtrl.text, passCtrl.text);
-                }
-              },
+            SizedBox(
+              width: double.infinity,
+              child: CustomButton(
+                title: 'Masuk',
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    loginProvider.login(context, emailCtrl.text, passCtrl.text);
+                  }
+                },
+              ),
             ),
             const SizedBox(height: 10),
             Row(
