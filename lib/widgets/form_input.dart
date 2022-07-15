@@ -5,6 +5,7 @@ import 'package:kbti_app/screens/themes.dart';
 class FormInput extends StatelessWidget {
   String title;
   String hint;
+  int maxLines;
   TextEditingController? controller;
   bool? obscureText;
   String? Function(String?)? validator;
@@ -12,6 +13,7 @@ class FormInput extends StatelessWidget {
     Key? key,
     required this.title,
     required this.hint,
+    this.maxLines = 1,
     this.controller,
     this.obscureText,
     this.validator,
@@ -28,6 +30,7 @@ class FormInput extends StatelessWidget {
         height: 10,
       ),
       TextFormField(
+        maxLines: maxLines,
         controller: controller,
         obscureText: obscureText ?? false,
         validator: validator,

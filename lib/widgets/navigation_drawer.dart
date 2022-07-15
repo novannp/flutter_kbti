@@ -8,6 +8,7 @@ import 'package:kbti_app/screens/themes.dart';
 import 'package:kbti_app/widgets/drawer_list_tile.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../models/user.dart';
 import '../screens/about_screen.dart';
 import '../screens/home_screen.dart';
 
@@ -22,7 +23,14 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
   @override
   Widget build(BuildContext context) {
     var userProvider = Provider.of<UserProvider>(context);
-
+    Map<String, dynamic> initialData = {
+      'username': '',
+      'email': 'belum masuk',
+      'totalApproved': 0,
+      'totalReview': 0,
+      'totalReject': 0,
+      'definitions': []
+    };
     return Container(
       color: Theme.of(context).canvasColor,
       height: double.infinity,
@@ -32,18 +40,44 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              FutureBuilder(
+              FutureBuilder<Map<String, dynamic>?>(
+                initialData: initialData,
                 future: userProvider.getProfileUser(),
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  print(snapshot.data);
-                  if (!snapshot.hasData) {
+                  var result = snapshot.data as Map<String, dynamic>;
+                  var user = User.fromJson(result);
+                  if (snapshot.hasError) {
+                    return DrawerHeader(
+                        decoration: BoxDecoration(
+                          color: blueDarkColor,
+                        ),
+                        child: Center(child: Text('Koneksi Error')));
+                  }
+                  if (snapshot.connectionState == ConnectionState.waiting) {
                     return DrawerHeader(
                       decoration: BoxDecoration(
                         color: blueDarkColor,
                       ),
-                      child: Container(),
+                      child: const Center(
+                        child: Text(
+                          'Loading...',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
                     );
-                  } else {
+                  } else if (snapshot.connectionState == ConnectionState.none) {
+                    return DrawerHeader(
+                      decoration: BoxDecoration(
+                        color: blueDarkColor,
+                      ),
+                      child: const Center(
+                        child: Text(
+                          'Tidak ada koneksi',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    );
+                  } else if (snapshot.connectionState == ConnectionState.done) {
                     return DrawerHeader(
                       decoration: BoxDecoration(
                         color: blueDarkColor,
@@ -61,7 +95,7 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                           ),
                           const SizedBox(height: 20),
                           Text(
-                            snapshot.data['username'] ?? 'Unknown',
+                            user.username ?? 'Guest',
                             style: GoogleFonts.lato(
                               fontSize: 20,
                               color: Colors.white,
@@ -70,12 +104,17 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                             overflow: TextOverflow.ellipsis,
                           ),
                           Text(
-                            snapshot.data['email'] ?? 'Unknown',
+                            user.email ?? 'guest@kbti.com',
                             style: GoogleFonts.lato(color: Colors.grey[400]),
                             overflow: TextOverflow.ellipsis,
                           )
                         ],
                       ),
+                    );
+                  } else {
+                    return DrawerHeader(
+                      decoration: BoxDecoration(color: blueDarkColor),
+                      child: null,
                     );
                   }
                 },

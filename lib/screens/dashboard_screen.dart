@@ -1,19 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:kbti_app/providers/dropdown_provider.dart';
 import 'package:kbti_app/providers/user_provider.dart';
 import 'package:kbti_app/widgets/custom_button.dart';
 import 'package:kbti_app/widgets/custom_app_bar.dart';
 import 'package:kbti_app/widgets/definition_card.dart';
+import 'package:kbti_app/widgets/form_input.dart';
 import 'package:kbti_app/widgets/navigation_drawer.dart';
 import 'package:provider/provider.dart';
 
 import '../models/user.dart';
 import 'themes.dart';
 
-class DashboardScreen extends StatelessWidget {
-  const DashboardScreen({Key? key}) : super(key: key);
+class DashboardScreen extends StatefulWidget {
+  DashboardScreen({Key? key}) : super(key: key);
+
+  @override
+  State<DashboardScreen> createState() => _DashboardScreenState();
+}
+
+class _DashboardScreenState extends State<DashboardScreen> {
+  String selectedValue = '1';
 
   @override
   Widget build(BuildContext context) {
+    var dropdownProvider = Provider.of<DropdownProvider>(context);
     var userProvider = Provider.of<UserProvider>(context);
     return Scaffold(
       drawer: const NavigationDrawer(),
@@ -21,34 +31,133 @@ class DashboardScreen extends StatelessWidget {
       body: FutureBuilder(
         future: userProvider.getProfileUser(),
         builder: (context, snapshot) {
+          Map<String, dynamic> result = snapshot.data as Map<String, dynamic>;
+
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
               child: CircularProgressIndicator(),
             );
+          } else if (snapshot.connectionState == ConnectionState.done) {
+            var user = User.fromJson(result);
+            return Padding(
+              padding: const EdgeInsets.only(left: 14, right: 14, top: 10),
+              child: ListView(
+                children: [
+                  buildDashboardCard(context, user),
+                  CustomButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          fullscreenDialog: true,
+                          builder: (context) {
+                            return Scaffold(
+                              appBar: buildAppBar('Tambahkan Definisi'),
+                              body: Padding(
+                                padding: const EdgeInsets.only(
+                                    right: 14, left: 14, top: 10),
+                                child: Container(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Expanded(
+                                      child: Form(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            FormInput(
+                                                title: 'Istilah',
+                                                hint:
+                                                    'Tulis istilah IT, cth: Komputer'),
+                                            const SizedBox(height: 10),
+                                            FormInput(
+                                                maxLines: 8,
+                                                title: 'Definisi',
+                                                hint:
+                                                    'Jelaskan definisi dari istilah tersebut'),
+                                            const SizedBox(height: 10),
+                                            Text(
+                                              'Pilih Kategori',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headline4,
+                                            ),
+                                            buildDropdownFormField(
+                                                dropdownProvider),
+                                            const SizedBox(height: 10),
+                                            Center(
+                                              child: SizedBox(
+                                                width: double.infinity,
+                                                child: CustomButton(
+                                                  title: '+ Tambahkan',
+                                                  onPressed: () {},
+                                                ),
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      );
+                    },
+                    title: '+ Tambahkan istilah baru',
+                  ),
+                  const SizedBox(height: 10),
+                  Column(
+                      children: user.definitions!
+                          .map((definition) =>
+                              DefinitionCard(definition: definition))
+                          .toList()),
+                ],
+              ),
+            );
+          } else {
+            return const Center(
+              child: Text('Error'),
+            );
           }
-          Map<String, dynamic> result = snapshot.data as Map<String, dynamic>;
-          var user = User.fromJson(result);
-          return Padding(
-            padding: const EdgeInsets.only(left: 14, right: 14, top: 10),
-            child: ListView(
-              children: [
-                buildDashboardCard(context, user),
-                CustomButton(
-                  onPressed: () {},
-                  title: '+ Tambahkan istilah baru',
-                ),
-                const SizedBox(height: 10),
-                Column(
-                    children: user.definitions
-                        .map((definition) =>
-                            DefinitionCard(definition: definition))
-                        .toList()),
-              ],
-            ),
-          );
         },
       ),
     );
+  }
+
+  FutureBuilder<dynamic> buildDropdownFormField(
+      DropdownProvider dropdownProvider) {
+    return FutureBuilder(
+        future: dropdownProvider.getCategory(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.hasData) {
+            List<DropdownMenuItem<String>> items = snapshot.data
+                ?.map<DropdownMenuItem<String>>(
+                  (item) => DropdownMenuItem(
+                    value: item.id.toString(),
+                    child: Text(
+                      item.category.toString(),
+                    ),
+                  ),
+                )
+                .toList();
+            return DropdownButtonFormField<String>(
+                value: selectedValue,
+                items: items,
+                onChanged: (newValue) {
+                  setState(() {
+                    selectedValue = newValue!;
+                  });
+                });
+          } else if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else
+            return Text('Gagal Mendapatkan kategori yang tersedia');
+        });
   }
 
   Widget buildDashboardCard(BuildContext context, User user) {
@@ -90,7 +199,10 @@ class DashboardScreen extends StatelessWidget {
                 margin: const EdgeInsets.symmetric(vertical: 10),
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: bgChipColor,
+                  // ignore: unrelated_type_equality_checks
+                  color: ThemeMode == ThemeMode.light
+                      ? bgChipColor
+                      : Color.fromARGB(255, 32, 32, 32),
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: Row(

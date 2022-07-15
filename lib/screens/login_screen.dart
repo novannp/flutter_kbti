@@ -5,11 +5,26 @@ import 'package:kbti_app/widgets/custom_button.dart';
 import 'package:kbti_app/widgets/form_input.dart';
 import 'package:provider/provider.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   LoginScreen({Key? key}) : super(key: key);
-  final emailCtrl = TextEditingController();
-  final passCtrl = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final TextEditingController emailCtrl = TextEditingController();
+
+  final TextEditingController passCtrl = TextEditingController();
+
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  @override
+  void dispose() {
+    super.dispose();
+    emailCtrl.dispose();
+    passCtrl.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,8 +68,7 @@ class LoginScreen extends StatelessWidget {
                   ]))
             ]),
             const SizedBox(height: 20),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 50),
+            SizedBox(
               width: double.infinity,
               child: CustomButton(
                 title: 'Masuk',

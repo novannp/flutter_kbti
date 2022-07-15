@@ -10,7 +10,24 @@ import '../models/user.dart';
 class UserProvider extends ChangeNotifier {
   var storage = SecureStorage();
 
-  Future getProfileUser() async {
+  addDefinition(String term, String definition, int categoryId) async {
+    var url = Uri.parse(apiEndPoint['ADD_DEFINITION']);
+    var response = await http.post(
+      url,
+      body: {
+        'term': term,
+        'definition': definition,
+        'categoryId': categoryId,
+      },
+      headers: {'Content-Type': 'application/json; charset=UTF-8'},
+    );
+
+    if (response.statusCode == 201) {
+      loading();
+    }
+  }
+
+  Future<Map<String, dynamic>?> getProfileUser() async {
     var token = await storage.read('token');
     Uri url = Uri.parse(apiEndPoint['DASHBOARD']);
 
@@ -18,7 +35,9 @@ class UserProvider extends ChangeNotifier {
         await http.get(url, headers: {"Authorization": "Bearer $token"});
     var result = jsonDecode(response.body)['data'];
     if (response.statusCode == 200) {
-      return result;
+      return result as Map<String, dynamic>;
+    } else {
+      return null;
     }
   }
 
