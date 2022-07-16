@@ -41,7 +41,7 @@ class _KBTIAppState extends State<KBTIApp> {
           themeMode: themeProvider.themeMode,
           debugShowCheckedModeBanner: false,
           title: 'KBTI',
-          initialRoute: '/dashboard',
+          initialRoute: '/',
           routes: {
             '/': (context) => const SplashScreen(),
             '/home': (context) => const HomeScreen(),

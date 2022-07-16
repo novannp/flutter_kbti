@@ -1,8 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:kbti_app/providers/theme_provider.dart';
 import 'package:kbti_app/screens/themes.dart';
 import 'package:kbti_app/services/storage.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -37,8 +40,12 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Provider.of<ThemeProvider>(context);
     return Scaffold(
-      backgroundColor: blueColor,
+      backgroundColor:
+          theme.currentTheme == 'light' || theme.currentTheme == 'system'
+              ? blueColor
+              : null,
       body: Center(
         child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

@@ -27,7 +27,7 @@ class UserProvider extends ChangeNotifier {
     }
   }
 
-  Future<Map<String, dynamic>?> getProfileUser() async {
+  Future<Map<String, dynamic>> getProfileUser() async {
     var token = await storage.read('token');
     Uri url = Uri.parse(apiEndPoint['DASHBOARD']);
 
@@ -35,9 +35,12 @@ class UserProvider extends ChangeNotifier {
         await http.get(url, headers: {"Authorization": "Bearer $token"});
     var result = jsonDecode(response.body)['data'];
     if (response.statusCode == 200) {
-      return result as Map<String, dynamic>;
+      result as Map<String, dynamic>;
+      await storage.write('username', result['username']);
+      await storage.write('emailUser', result['email']);
+      return result;
     } else {
-      return null;
+      throw 'error get profile user';
     }
   }
 
@@ -75,15 +78,21 @@ class UserProvider extends ChangeNotifier {
       },
     );
     var result = jsonDecode(response.body);
-    print(response.statusCode);
+    // print(response.statusCode);
     if (response.statusCode == 200) {
       var token = result['data']['access_token']['token'];
-      var tokenStorage = storage.write('token', token);
+      storage.write('token', token);
+      await getProfileUser();
 
       showDialog(context: context, builder: (context) => loading());
       Future.delayed(const Duration(seconds: 2), () {
-        Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          '/home',
+          (route) => false,
+        );
       });
+      print(token);
       return token;
     } else {
       showDialog(context: context, builder: (context) => loading());
@@ -100,7 +109,7 @@ class UserProvider extends ChangeNotifier {
   }
 
   logout(context) async {
-    await storage.delete('token');
+    await storage.deleteAll();
     Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
   }
 

@@ -5,6 +5,7 @@ import 'package:kbti_app/screens/dashboard_screen.dart';
 import 'package:kbti_app/screens/login_screen.dart';
 import 'package:kbti_app/screens/settings_screen.dart';
 import 'package:kbti_app/screens/themes.dart';
+import 'package:kbti_app/services/storage.dart';
 import 'package:kbti_app/widgets/drawer_list_tile.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -20,17 +21,26 @@ class NavigationDrawer extends StatefulWidget {
 }
 
 class _NavigationDrawerState extends State<NavigationDrawer> {
+  SecureStorage storage = SecureStorage();
+
+  user() async {
+    var user = await storage.readAll();
+    var data = {
+      'username': user['username'],
+      'emailUser': user['emailUser'],
+    };
+    return data;
+  }
+
+  @override
+  void initState() {
+    user();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     var userProvider = Provider.of<UserProvider>(context);
-    Map<String, dynamic> initialData = {
-      'username': '',
-      'email': 'belum masuk',
-      'totalApproved': 0,
-      'totalReview': 0,
-      'totalReject': 0,
-      'definitions': []
-    };
     return Container(
       color: Theme.of(context).canvasColor,
       height: double.infinity,
@@ -40,82 +50,60 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              FutureBuilder<Map<String, dynamic>?>(
-                initialData: initialData,
-                future: userProvider.getProfileUser(),
+              FutureBuilder(
+                future: user(),
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  var result = snapshot.data as Map<String, dynamic>;
-                  var user = User.fromJson(result);
-                  if (snapshot.hasError) {
-                    return DrawerHeader(
-                        decoration: BoxDecoration(
-                          color: blueDarkColor,
-                        ),
-                        child: Center(child: Text('Koneksi Error')));
-                  }
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return DrawerHeader(
                       decoration: BoxDecoration(
                         color: blueDarkColor,
                       ),
-                      child: const Center(
-                        child: Text(
-                          'Loading...',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ),
-                    );
-                  } else if (snapshot.connectionState == ConnectionState.none) {
-                    return DrawerHeader(
-                      decoration: BoxDecoration(
-                        color: blueDarkColor,
-                      ),
-                      child: const Center(
-                        child: Text(
-                          'Tidak ada koneksi',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ),
-                    );
-                  } else if (snapshot.connectionState == ConnectionState.done) {
-                    return DrawerHeader(
-                      decoration: BoxDecoration(
-                        color: blueDarkColor,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const SizedBox(
-                            height: 60,
-                            width: 60,
-                            child: CircleAvatar(
-                              backgroundImage:
-                                  NetworkImage('https://picsum.photos/200'),
-                            ),
-                          ),
-                          const SizedBox(height: 20),
-                          Text(
-                            user.username ?? 'Guest',
-                            style: GoogleFonts.lato(
-                              fontSize: 20,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          Text(
-                            user.email ?? 'guest@kbti.com',
-                            style: GoogleFonts.lato(color: Colors.grey[400]),
-                            overflow: TextOverflow.ellipsis,
-                          )
-                        ],
-                      ),
+                      child: Column(),
                     );
                   } else {
-                    return DrawerHeader(
-                      decoration: BoxDecoration(color: blueDarkColor),
-                      child: null,
-                    );
+                    if (snapshot.hasData) {
+                      var user = snapshot.data;
+                      return DrawerHeader(
+                        decoration: BoxDecoration(
+                          color: blueDarkColor,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(
+                              height: 60,
+                              width: 60,
+                              child: CircleAvatar(
+                                backgroundImage:
+                                    NetworkImage('https://picsum.photos/200'),
+                              ),
+                            ),
+                            const SizedBox(height: 20),
+                            Text(
+                              user['username'] ?? 'Guest',
+                              style: GoogleFonts.lato(
+                                fontSize: 20,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            Text(
+                              user['emailUser'] ?? 'guest@kbti.com',
+                              style: GoogleFonts.lato(color: Colors.grey[400]),
+                              overflow: TextOverflow.ellipsis,
+                            )
+                          ],
+                        ),
+                      );
+                    } else {
+                      return DrawerHeader(
+                        decoration: BoxDecoration(
+                          color: blueDarkColor,
+                        ),
+                        child: Column(),
+                      );
+                    }
                   }
                 },
               ),
@@ -124,7 +112,7 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                 icon: const Icon(Icons.dashboard_rounded),
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return DashboardScreen();
+                    return const DashboardScreen();
                   }));
                 },
               ),

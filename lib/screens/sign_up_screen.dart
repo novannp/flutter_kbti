@@ -19,8 +19,10 @@ class SignupScreen extends StatelessWidget {
     return Scaffold(
         body: ListView(children: [
       Container(
-          height: MediaQuery.of(context).size.height / 1.2,
-          margin: const EdgeInsets.symmetric(horizontal: 70),
+          margin: EdgeInsets.symmetric(
+            horizontal: 70,
+            vertical: MediaQuery.of(context).size.height / 14,
+          ),
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
             Image.asset('assets/images/logo.png', height: 50),
             const SizedBox(height: 10),

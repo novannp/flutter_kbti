@@ -13,7 +13,7 @@ class AboutScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildAppBar('Tentang'),
-      drawer: const NavigationDrawer(),
+      drawer: NavigationDrawer(),
       body: ScrollConfiguration(
         behavior: MyBehavior(),
         child: ListView(

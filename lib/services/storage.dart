@@ -17,9 +17,18 @@ class SecureStorage {
     return read;
   }
 
+  Future readAll() async {
+    var readAll = await _storage.readAll(aOptions: _getAndroidOptions());
+    return readAll;
+  }
+
   Future delete(key) async {
     var delete =
         await _storage.delete(key: key, aOptions: _getAndroidOptions());
     return delete;
+  }
+
+  Future deleteAll() async {
+    return _storage.deleteAll(aOptions: _getAndroidOptions());
   }
 }

@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:kbti_app/providers/definition_provider.dart';
 import 'package:kbti_app/providers/dropdown_provider.dart';
 import 'package:kbti_app/screens/themes.dart';
+import 'package:kbti_app/services/storage.dart';
 import 'package:kbti_app/widgets/custom_app_bar.dart';
 import 'package:kbti_app/widgets/definition_card.dart';
 import 'package:kbti_app/widgets/navigation_drawer.dart';
@@ -21,6 +22,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  var storage = SecureStorage();
   TextEditingController controller = TextEditingController();
   String selectedIdValue = '1';
   String selectedCategory = '';
@@ -42,8 +44,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
     var dropdownProvider = Provider.of<DropdownProvider>(context);
     dropdownProvider.getCategory();
+    // print("CEK CEK ${storage.read('userData')}");
     return Scaffold(
-        drawer: NavigationDrawer(),
+        drawer: const NavigationDrawer(),
         resizeToAvoidBottomInset: false,
         appBar: buildAppBar(''),
         body: Padding(
