@@ -20,6 +20,16 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
   String selectedValue = '1';
+  final termCtrl = TextEditingController();
+  final definitionCtrl = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  @override
+  void dispose() {
+    termCtrl.dispose();
+    definitionCtrl.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +37,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
     var userProvider = Provider.of<UserProvider>(context);
     return Scaffold(
       drawer: const NavigationDrawer(),
-      appBar: buildAppBar('Dashboard'),
+      appBar: buildAppBarWithActions('dashboard', [
+        IconButton(
+            onPressed: () {
+              Navigator.of(context).pushReplacementNamed('/dashboard');
+            },
+            icon: const Icon(Icons.refresh))
+      ]),
       body: FutureBuilder(
         future: userProvider.getProfileUser(),
         builder: (context, snapshot) {
@@ -51,56 +67,73 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           fullscreenDialog: true,
                           builder: (context) {
                             return Scaffold(
-                              appBar: buildAppBar('Tambahkan Definisi'),
-                              body: Padding(
-                                padding: const EdgeInsets.only(
-                                    right: 14, left: 14, top: 10),
-                                child: Container(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Expanded(
-                                      child: Form(
-                                        child: Column(
+                                appBar: buildAppBar('Tambahkan Definisi'),
+                                body: ListView(
+                                  children: [
+                                    Container(
+                                      margin: const EdgeInsets.symmetric(
+                                          horizontal: 20, vertical: 30),
+                                      child: Column(
                                           crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                              CrossAxisAlignment.stretch,
                                           children: [
-                                            FormInput(
-                                                title: 'Istilah',
-                                                hint:
-                                                    'Tulis istilah IT, cth: Komputer'),
-                                            const SizedBox(height: 10),
-                                            FormInput(
-                                                maxLines: 8,
-                                                title: 'Definisi',
-                                                hint:
-                                                    'Jelaskan definisi dari istilah tersebut'),
-                                            const SizedBox(height: 10),
-                                            Text(
-                                              'Pilih Kategori',
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .headline4,
+                                            Form(
+                                                key: _formKey,
+                                                child: Column(
+                                                  children: [
+                                                    FormInput(
+                                                        controller: termCtrl,
+                                                        title: 'Judul',
+                                                        hint: 'Masukkan Judul',
+                                                        validator:
+                                                            (String? value) {
+                                                          if (value!.isEmpty) {
+                                                            return "Please add title";
+                                                          }
+                                                          return null;
+                                                        }),
+                                                    const SizedBox(
+                                                      height: 20,
+                                                    ),
+                                                    FormInput(
+                                                        controller:
+                                                            definitionCtrl,
+                                                        maxLines: 6,
+                                                        title: 'Deskripsi',
+                                                        hint:
+                                                            "Masukkan Deskripsi",
+                                                        validator:
+                                                            (String? value) {
+                                                          if (value!.isEmpty) {
+                                                            return "Please add Description";
+                                                          }
+                                                          return null;
+                                                        }),
+                                                  ],
+                                                )),
+                                            Container(
+                                              margin:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 20),
+                                              child: buildDropdownFormField(
+                                                  dropdownProvider),
                                             ),
-                                            buildDropdownFormField(
-                                                dropdownProvider),
-                                            const SizedBox(height: 10),
-                                            Center(
-                                              child: SizedBox(
-                                                width: double.infinity,
-                                                child: CustomButton(
-                                                  title: '+ Tambahkan',
-                                                  onPressed: () {},
-                                                ),
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ),
+                                            CustomButton(
+                                                title: 'Kirim',
+                                                onPressed: () {
+                                                  if (_formKey.currentState!
+                                                      .validate()) {
+                                                    userProvider.addDefinition(
+                                                        context,
+                                                        termCtrl.text,
+                                                        definitionCtrl.text,
+                                                        selectedValue);
+                                                  }
+                                                }),
+                                          ]),
                                     ),
-                                  ),
-                                ),
-                              ),
-                            );
+                                  ],
+                                ));
                           },
                         ),
                       );
@@ -151,8 +184,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   });
                 });
           } else if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
+            return Container(
+              margin: const EdgeInsets.symmetric(vertical: 15),
+              child: const Center(
+                child: Text('Loading data ...'),
+              ),
             );
           } else {
             return const Text('Gagal Mendapatkan kategori yang tersedia');
