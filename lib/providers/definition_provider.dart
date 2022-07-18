@@ -6,6 +6,18 @@ import 'package:kbti_app/models/definition.dart';
 import '../models/term.dart';
 
 class DefinitionProvider extends ChangeNotifier {
+  getNewlyAddedTerm() async {
+    var url = Uri.parse(apiEndPoint['NEWLY_ADDED_TERM']);
+    var result = await http.get(url);
+    if (result.statusCode == 200) {
+      List data = jsonDecode(result.body)['data'];
+      List<Term> terms = data.map((e) => Term.fromJson(e)).toList();
+      return terms;
+    } else {
+      <Term>[];
+    }
+  }
+
   getRandomDefinitions() async {
     var url = Uri.parse(apiEndPoint['GET_RANDOM_DEFINITIONS']);
 

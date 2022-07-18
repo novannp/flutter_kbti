@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:kbti_app/models/term.dart';
 import 'package:kbti_app/providers/definition_provider.dart';
 import 'package:kbti_app/providers/dropdown_provider.dart';
 import 'package:kbti_app/screens/themes.dart';
@@ -57,6 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 10),
               buildSearchBar(definitionProvider),
               const SizedBox(height: 10),
+              getTermNewlyAdded(definitionProvider),
               if (showByCategory == true)
                 buildDefinitionsByCategory(definitionProvider)
               else if (controller.text == "")
@@ -68,6 +70,45 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
         ));
+  }
+
+  Column getTermNewlyAdded(DefinitionProvider definitionProvider) {
+    return Column(
+      children: [
+        FutureBuilder(
+            future: definitionProvider.getNewlyAddedTerm(),
+            builder: (context, snapshot) {
+              List<Term> termList = snapshot.data as List<Term>;
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else if (snapshot.connectionState == ConnectionState.done) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Definisi yang baru ditambahkan',
+                      style: Theme.of(context).textTheme.headline3,
+                    ),
+                    const SizedBox(height: 10),
+                    Wrap(
+                      children: termList
+                          .map((e) => Container(
+                              margin: const EdgeInsets.only(right: 10),
+                              child: Chip(
+                                  side: BorderSide(width: 1, color: blueColor),
+                                  backgroundColor: Colors.white,
+                                  label: Text(e.term.toString()))))
+                          .toList(),
+                    ),
+                  ],
+                );
+              } else
+                return Container();
+            }),
+      ],
+    );
   }
 
   FutureBuilder<Object?> buildDefinitionsBySearch(

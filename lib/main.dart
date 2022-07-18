@@ -45,7 +45,7 @@ class _KBTIAppState extends State<KBTIApp> {
           routes: {
             '/': (context) => const SplashScreen(),
             '/home': (context) => const HomeScreen(),
-            '/dashboard': (context) => DashboardScreen(),
+            '/dashboard': (context) => const DashboardScreen(),
             '/signup': (context) => SignupScreen(),
             '/login': (context) => LoginScreen()
           },
