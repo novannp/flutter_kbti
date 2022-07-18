@@ -5,7 +5,6 @@ import 'package:kbti_app/providers/theme_provider.dart';
 import 'package:kbti_app/screens/themes.dart';
 import 'package:kbti_app/services/storage.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);

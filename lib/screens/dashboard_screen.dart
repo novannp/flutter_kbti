@@ -37,7 +37,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     var userProvider = Provider.of<UserProvider>(context);
     return Scaffold(
       drawer: const NavigationDrawer(),
-      appBar: buildAppBarWithActions('dashboard', [
+      appBar: buildAppBarWithActions('Dashboard', [
         IconButton(
             onPressed: () {
               Navigator.of(context).pushReplacementNamed('/dashboard');
@@ -187,7 +187,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             return Container(
               margin: const EdgeInsets.symmetric(vertical: 15),
               child: const Center(
-                child: Text('Loading data ...'),
+                child: Text('Loading kategori'),
               ),
             );
           } else {

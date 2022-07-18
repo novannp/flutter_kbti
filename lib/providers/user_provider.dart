@@ -29,15 +29,21 @@ class UserProvider extends ChangeNotifier {
 
     if (response.statusCode == 201) {
       showDialog(context: context, builder: (context) => loading());
+      Future.delayed(
+        const Duration(seconds: 2),
+        () {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(snackbar('Berhasil Tambahkan Definitions'));
+          Navigator.pop(context);
+        },
+      );
+    } else if (response.statusCode == 422) {
       Future.delayed(const Duration(seconds: 2), () {
-        Navigator.pop(context);
         ScaffoldMessenger.of(context)
-            .showSnackBar(snackbar('Berhasil Tambahkan Definitions'));
+            .showSnackBar(snackbar('Deskripsi harus lebih dari 10 karakter'));
+        Navigator.pop(context);
       });
-      print(response.body);
-    } else {
-      print(response.body);
-    }
+    } else {}
   }
 
   Future<Map<String, dynamic>> getProfileUser() async {
@@ -105,7 +111,6 @@ class UserProvider extends ChangeNotifier {
           (route) => false,
         );
       });
-      print(token);
       return token;
     } else {
       showDialog(context: context, builder: (context) => loading());

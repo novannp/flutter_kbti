@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:kbti_app/screens/themes.dart';
 
 // ignore: must_be_immutable
 class CustomButton extends StatelessWidget {

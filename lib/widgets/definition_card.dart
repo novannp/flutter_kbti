@@ -133,10 +133,16 @@ class DefinitionCard extends StatelessWidget {
                                     .textTheme
                                     .headline6
                                     ?.copyWith(
-                                        color:
-                                            definition.statusDefinition != null
-                                                ? Colors.green
-                                                : Colors.red),
+                                        color: definition.statusDefinition ==
+                                                'Disetujui'
+                                            ? Colors.green
+                                            : definition.statusDefinition ==
+                                                    'Direview'
+                                                ? Colors.orange
+                                                : definition.statusDefinition ==
+                                                        'Ditolak'
+                                                    ? Colors.red
+                                                    : Colors.red),
                               )
                             : Container()
                       ],
