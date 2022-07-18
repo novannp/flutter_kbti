@@ -5,25 +5,38 @@ import 'package:kbti_app/configs/apiEndPoints.dart';
 import 'package:http/http.dart' as http;
 import 'package:kbti_app/services/storage.dart';
 
-import '../models/user.dart';
-
 class UserProvider extends ChangeNotifier {
   var storage = SecureStorage();
 
-  addDefinition(String term, String definition, int categoryId) async {
+  addDefinition(BuildContext context, String term, String definition,
+      String categoryId) async {
     var url = Uri.parse(apiEndPoint['ADD_DEFINITION']);
+    var token = await storage.read('token');
+    Map data = {
+      "term": term,
+      "definition": definition,
+      "category_id": int.parse(categoryId),
+    };
+
     var response = await http.post(
       url,
-      body: {
-        'term': term,
-        'definition': definition,
-        'categoryId': categoryId,
+      body: jsonEncode(data),
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': ' application/json'
       },
-      headers: {'Content-Type': 'application/json; charset=UTF-8'},
     );
 
     if (response.statusCode == 201) {
-      loading();
+      showDialog(context: context, builder: (context) => loading());
+      Future.delayed(const Duration(seconds: 2), () {
+        Navigator.pop(context);
+        ScaffoldMessenger.of(context)
+            .showSnackBar(snackbar('Berhasil Tambahkan Definitions'));
+      });
+      print(response.body);
+    } else {
+      print(response.body);
     }
   }
 
